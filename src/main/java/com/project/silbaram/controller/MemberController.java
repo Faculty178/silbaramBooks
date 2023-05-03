@@ -59,10 +59,12 @@ public class MemberController {
         Integer mid = memberService.login(userId, password);
 
         if(mid == null) {
+            log.info("login fails!");
             model.addAttribute("msg","아이디와 비밀번호를 확인해주세요");
             return "silbaram/member/login";
         }
         session.setAttribute("mid", mid);
+        log.info("login success!");
         return "redirect:/silbaram/index";
     }
 

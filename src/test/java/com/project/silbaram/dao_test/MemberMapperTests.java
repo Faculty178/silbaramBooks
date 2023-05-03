@@ -47,5 +47,17 @@ public class MemberMapperTests {
         log.info("count: " +count);
     }
 
+    @Test
+    public void updateMemberTest() {
+        MemberVO memberVO = MemberVO.builder()
+                .mid(0)
+                .nickName("닉")
+                .birthDate(LocalDate.of(2000,01,01))
+                .phoneNumber("01012345678")
+                .email("a@example.com")
+                .build();
+        memberDAO.updateMember(memberVO);
+    }
+
 
 }
