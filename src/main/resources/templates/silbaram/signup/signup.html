@@ -7,27 +7,60 @@
 </head>
 <body>
 <h1>회원가입</h1>
-<form th:action="@{/silbaram/signup/signup}" method="post" name="frmMemberInsert">
-  <p>아이디: <input type="text" id="userId" name="userId" required /></p>
-  <button type="button" onclick="checkId()">중복확인</button></p>
-  <span class="idCheck"></span>
-  <p>비밀번호: <input type="password" name="password" required /></p>
-  <span></span>
-  <p>닉네임: <input type="text" name="nickName" required /></p>
-  <p>이름: <input type="text" name="name" required /></p>
-  <p>생년월일: <input type="date" name="birthDate" required /></p>
-  <p>성별: <input type="radio" name="gender" value="M" required />남성
-    <input type="radio" name="gender" value="F" required />여성</p>
-  <p>전화번호: <input type="tel" name="phoneNumber" required /></p>
-  <p>이메일: <input type="email" name="email" required /></p>
-  <p>우편번호: <input type="text" name="zipcode" /></p>
-  <p>주소: <input type="text" name="address" /></p>
-  <p><button type="submit">회원가입</button></p>
+<form th:action="@{/silbaram/signup}" method="post" name="frmMemberInsert">
+  <div>
+    <label for="userId">아이디:</label>
+    <input type="text" id="userId" name="userId" required />
+    <button type="button" onclick="checkId()">중복확인</button>
+    <span class="idCheck"></span>
+  </div>
+  <div>
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password" required />
+    <span></span>
+  </div>
+  <div>
+    <label for="nickName">닉네임:</label>
+    <input type="text" id="nickName" name="nickName" required />
+  </div>
+  <div>
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" required />
+  </div>
+  <div>
+    <label for="birthDate">생년월일:</label>
+    <input type="date" id="birthDate" name="birthDate" required />
+  </div>
+  <div>
+    <label>성별:</label>
+    <input type="radio" name="gender" value="M" required /><span>남성</span>
+    <input type="radio" name="gender" value="F" required /><span>여성</span>
+  </div>
+  <div>
+    <label for="phoneNumber">전화번호:</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber" required />
+  </div>
+  <div>
+    <label for="email">이메일:</label>
+    <input type="email" id="email" name="email" required />
+  </div>
+  <div>
+    <label for="zipcode">우편번호:</label>
+    <input type="text" id="zipcode" name="zipcode" />
+  </div>
+  <div>
+    <label for="address">주소:</label>
+    <input type="text" id="address" name="address" />
+  </div>
+  <div>
+    <button type="submit">회원가입</button>
+  </div>
 </form>
+
 <script type="text/javascript">
-  var idChk = 0;
+  const idChk = 0;
   function checkId(){
-    var id = $('#userId').val(); //id값이 "userId"인 입력란의 값을 저장
+    const id = $('#userId').val(); //id값이 "userId"인 입력란의 값을 저장
     if (!/^[a-z0-9_-]{5,15}$/g.test(id)) {
       alert("아이디는 5~15자의 영문소문자, 숫자, '_', '-' 만 가능합니다");
       return;
@@ -58,6 +91,38 @@
       }
     });
   };
+</script>
+<script>
+  // // 3. ajax를 이용한 실시간 Id 중복확인
+  // // 2번에서 작업한 파일을 이용
+  // const inputId = document.querySelector('input[name=id]');
+  // inputId.addEventListener('keyup', function () {
+  //   const  id = frmMemberInsert.id.value; // 아이디 input에 있는 값
+  //   const idCheck = document.querySelector('.idCheck'); // 결과 문자열이 표현될 영역
+  //   xhr.open('GET', 'ajaxIdCheck.jsp?id=' + id); // HTTP 요청 초기화. 통신 방식와  url 설정
+  //   xhr.send();
+  //   //이벤트 등록. XMLHttpRequest 객체의 readyState 프로퍼티 값이 변할 때마다 자동으로 호출
+  //   xhr.onreadystatechange = () => {
+  //     // readyState 프로퍼티의 값이 DONE : 요청한 데이터의 처리가 완료되어 응답할 준비가 완료됨
+  //     if(xhr.readyState !== XMLHttpRequest.DONE) return;
+  //
+  //     if(xhr.status === 200) { // 서버(url)에 문서가 존재함
+  //       console.log(xhr.response);
+  //       const json = JSON.parse(xhr.response);
+  //       if (json.result === 'true') {
+  //         idCheck.style.color = 'red';
+  //         idCheck.innerHTML ='동일한 아이디가 있습니다.';
+  //       }
+  //       else {
+  //         idCheck.style.color = 'grey';
+  //         idCheck.innerHTML ='동일한 아이디가 없습니다.';
+  //       }
+  //     }
+  //     else { // 서버(url)에 문서가 존재하지 않음
+  //       console.error('Error', xhr.status, xhr.statusText);
+  //     }
+  //   }
+  // });
 </script>
 
 </body>

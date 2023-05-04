@@ -4,7 +4,7 @@
 <mapper namespace="com.project.silbaram.dao.MemberDAO">
 
 <!--회원가입-->
-    <insert id="insertMember">
+    <insert id="insertMember"  useGeneratedKeys="true" keyProperty="mid">
         INSERT INTO `member` (`userId`, `password`, `nickName`, `name`, `birthDate`, `gender`, `phoneNumber`,
                               `email`, `zipcode`, `address`, `socialLogin`, `isAdmin`)
         VALUES (#{userId}, #{password}, #{nickName}, #{name}, #{birthDate}, #{gender}, #{phoneNumber},
@@ -16,7 +16,7 @@
         SELECT COUNT(*) FROM `member` WHERE `userId` = #{userId}
     </select>
 
-<!-- 로그인 -->
+<!-- 로그인/회원정보 불러오기 -->
     <select id="getMemberById" resultType="com.project.silbaram.vo.MemberVO">
         SELECT * FROM `member` WHERE `userId` = #{userId}
     </select>

@@ -21,25 +21,28 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     private final MemberServiceImpl memberService;
 
-    @GetMapping("/signup/signup")
-    public void addMemberGET() {
+    @GetMapping("/signup")
+    public String  addMemberGET(Model model) {
+
         log.info("addMemberGET...");
+        model.addAttribute("memberDTO", new MemberDTO());
+        return "silbaram/signup/signup";
     }
-    @PostMapping("/signup/signup")
+    @PostMapping("/signup")
     public String addMemberPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info("addMemberPOST...");
         if (bindingResult.hasErrors()) {
             log.info("has error...");
             log.info(bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/silbaram/signup/signup";
+            return "redirect:/silbaram/signup";
         }
         log.info(memberDTO);
         memberService.addMember(memberDTO);
         return "redirect:/silbaram/index";
     }
 
-    @PostMapping("/signup/idCheck")
+    @PostMapping("/idCheck")
     @ResponseBody
     public boolean idCheck(@RequestBody String userId) {
         log.info("idCheck() : "+memberService.isDuplicatedUserId(userId));
@@ -48,20 +51,21 @@ public class MemberController {
 
 
 
-    @GetMapping("/member/login")
-    public String login() {
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("memberDTO", new MemberDTO());
         return "silbaram/member/login";
     }
 
-    @PostMapping("/member/login")
+    @PostMapping("/login")
     public String login(@RequestParam String userId, @RequestParam String password,
                         HttpSession session, Model model) {
-        Integer mid = memberService.login(userId, password);
+        Long mid = memberService.login(userId, password);
 
         if(mid == null) {
             log.info("login fails!");
             model.addAttribute("msg","아이디와 비밀번호를 확인해주세요");
-            return "silbaram/member/login";
+            return "redirect:/silbaram/login";
         }
         session.setAttribute("mid", mid);
         log.info("login success!");

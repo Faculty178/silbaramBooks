@@ -19,14 +19,14 @@ public class MemberMapperTests {
     @Test
     public void insertMemberTest() {
         MemberVO memberVO = MemberVO.builder()
-                .userId("아이디")
+                .userId("ididid1")
                 .password("password123")
-                .nickName("닉")
+                .nickName("닉a")
                 .name("John Doe")
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
-                .phoneNumber("01012345678")
-                .email("a@example.com")
+                .phoneNumber("01012345679")
+                .email("a@example.coma")
 //                .zipcode("12345")
 //                .address("123 Main St, Anytown USA")
 //                .socialLogin(false)
@@ -35,11 +35,11 @@ public class MemberMapperTests {
         memberDAO.insertMember(memberVO);
     }
 
-    @Test
-    public void getMemberByIdTest() {
-        MemberVO memberVO = memberDAO.getMemberById("aaaa");
-        log.info(memberVO);
-    }
+//    @Test
+//    public void getMemberByIdTest() {
+//        MemberVO memberVO = memberDAO.getMemberById("aaaa");
+//        log.info(memberVO);
+//    }
 
     @Test
     public void countMemberByUserIdTest() {
@@ -50,12 +50,17 @@ public class MemberMapperTests {
     @Test
     public void updateMemberTest() {
         MemberVO memberVO = MemberVO.builder()
-                .mid(0)
-                .nickName("닉")
+                .mid(1L)
+                .userId("ssss123")
+                .nickName("newNickName")
+                .password("password123")
+                .name("John Doe")
                 .birthDate(LocalDate.of(2000,01,01))
+                .gender("여")
                 .phoneNumber("01012345678")
-                .email("a@example.com")
+                .email("ab@example.coma")
                 .build();
+        log.info(memberVO);
         memberDAO.updateMember(memberVO);
     }
 

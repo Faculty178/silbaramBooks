@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class MemberDTO {
-    private int mid;
+    private Long mid;
     @NotBlank(message = "아이디를 입력해주세요.")
     @Pattern(regexp = "^[a-z0-9_-]{5,15}$", message = "아이디는 5~15자의 영문소문자, 숫자, '_', '-' 만 가능합니다")
     private String userId;

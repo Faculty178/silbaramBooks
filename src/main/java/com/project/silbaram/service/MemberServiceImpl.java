@@ -34,6 +34,15 @@ public class MemberServiceImpl implements MemberService{
         return count > 0; // true == 중복, false면 사용가능한 아이디
     }
 
+    @Override
+    public void modifyMember(MemberDTO memberDTO) {
+        log.info(modelMapper);
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        memberDAO.updateMember(memberVO);
+        log.info(memberVO);
+    }
+
+
 //    @Override
 //    public void updateUuid(String mid, String uuid) {
 //        memberDAO.updateUuid(mid,uuid);
@@ -47,7 +56,7 @@ public class MemberServiceImpl implements MemberService{
 //    }
 
     @Override
-    public Integer login(String userId, String password) {
+    public Long login(String userId, String password) {
         MemberVO memberVO = memberDAO.getMemberById(userId);
         if (memberVO == null) {
             return null;

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberVO {
-    private int mid;
+    private Long mid;
     private String userId;
     private String password;
     private String nickName;
