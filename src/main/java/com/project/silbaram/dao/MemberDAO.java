@@ -10,8 +10,11 @@ public interface MemberDAO {
     // 회원가입
     void insertMember(MemberVO memberVO);
 
-    // 로그인/ 회원 정보 불러오기
-    MemberVO getMemberById(String userId);
+    // 로그인
+    MemberVO selectMemberById(String userId);
+
+    // 회원 정보 불러오기
+    MemberVO selectMemberByMid(Long mid);
 
     // 중복아이디 체크
     int countMemberByUserId(String userId);

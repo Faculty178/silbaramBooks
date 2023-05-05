@@ -2,95 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <title>회원정보수정</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        div.hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<h1>회원가입</h1>
-<form th:action="@{/silbaram/mypage/modify}" method="post" name="frmMemberInsert">
-    <div>
-        <label for="userId">아이디:</label>
-        <input type="text" id="userId" name="userId" required />
-        <button type="button" onclick="checkId()">중복확인</button>
-        <span class="idCheck"></span>
-    </div>
-    <div>
-        <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required />
-        <span></span>
-    </div>
-    <div>
-        <label for="nickName">닉네임:</label>
-        <input type="text" id="nickName" name="nickName" required />
-    </div>
-    <div>
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" required />
-    </div>
-    <div>
-        <label for="birthDate">생년월일:</label>
-        <input type="date" id="birthDate" name="birthDate" required />
-    </div>
-    <div>
-        <label>성별:</label>
-        <input type="radio" name="gender" value="M" required /><span>남성</span>
-        <input type="radio" name="gender" value="F" required /><span>여성</span>
-    </div>
+
+<h1>회원정보수정</h1>
+<ul>
+    <li>
+        <a href="/silbaram/index">홈</a>
+    </li>
+    <li th:if="${session.mid}">
+        <a href="/silbaram/mypage/membermodify">회원정보 수정</a>
+    </li>
+    <li th:if="${session.mid}">
+        <a href="/silbaram/mypage/mybooks">서재</a>
+    </li>
+</ul>
+
+<form th:action="@{/silbaram/mypage/membermodify}"  th:object="${memberDTO}"  method="post" name="frmMemberInsert">
+
     <div>
         <label for="phoneNumber">전화번호:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+        <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" required />
     </div>
     <div>
         <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" required />
+        <input type="email" id="email" th:field="*{email}" required />
     </div>
     <div>
         <label for="zipcode">우편번호:</label>
-        <input type="text" id="zipcode" name="zipcode" />
+        <input type="text" id="zipcode" th:field="*{zipcode}" />
     </div>
     <div>
         <label for="address">주소:</label>
-        <input type="text" id="address" name="address" />
+        <input type="text" id="address" th:field="*{address}" />
     </div>
     <div>
-        <button type="submit">회원가입</button>
+        <button type="submit" onclick="checkModify()">회원정보 수정</button>
     </div>
 </form>
-
 <script type="text/javascript">
-    const idChk = 0;
-    function checkId(){
-        const id = $('#userId').val(); //id값이 "userId"인 입력란의 값을 저장
-        if (!/^[a-z0-9_-]{5,15}$/g.test(id)) {
-            alert("아이디는 5~15자의 영문소문자, 숫자, '_', '-' 만 가능합니다");
-            return;
-        }
+    function checkModify() {
         $.ajax({
-            url:"idCheck", //Controller에서 요청 받을 주소
-            type:"post", //POST 방식으로 전달
-            data:id,
-            dataType : "json", //서버로 돌려받는 값의 타입 지정
-            //서버로 보낼 데이터 설정
-            contentType : "application/json; charset=utf-8",
-            success:function(data){
-                if(data == true){
-                    alert("아이디가 존재합니다. 다른 아이디를 입력해 주세요");
-                    $('.chk-btn').addClass("has-error");
-                    $('.chk-btn').removeClass("has-success");
-                    $("#userId").focus();
-                } else {
-                    alert("사용가능한 아이디입니다");
-                    $('.chk-btn').addClass("has-success");
-                    $('.chk-btn').removeClass("has-error");
-                    $("#inputPwd").focus();
-                    idChk=1;
-                }
+            url: "/silbaram/mypage/membermodify",
+            type: "POST",
+            data: $("form[name=frmMemberInsert]").serialize(),
+            success: function (data) {
+                // Display an alert box if the member information is successfully updated
+                alert("회원정보가 성공적으로 업데이트 되었습니다.");
             },
-            error:function(error){
-                alert("아이디를 다시 입력해 주세요");
+            error: function (data) {
+                // Display an alert box if there is an error during the update process
+                alert("회원정보 업데이트에 실패하였습니다.");
             }
         });
-    };
+    }
 </script>
+
 </body>
+
 </html>
