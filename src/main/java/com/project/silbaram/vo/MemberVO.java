@@ -20,6 +20,8 @@ public class MemberVO {
     private String phoneNumber;
     private String email1;
     private String email2;
+
+    private String email;
     public String getEmail() {
         return email1 + email2;
     }

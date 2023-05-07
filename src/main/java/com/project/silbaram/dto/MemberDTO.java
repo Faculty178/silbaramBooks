@@ -38,9 +38,11 @@ public class MemberDTO {
     private String email1;
     @NotEmpty
     private String email2;
+    private String email;
     public String getEmail() {
         return email1 + email2;
     }
+
     private String zipcode;
     private String address;
     private boolean socialLogin;

@@ -2,9 +2,11 @@ package com.project.silbaram.controller;
 
 import com.project.silbaram.dto.MemberDTO;
 import com.project.silbaram.dto.MemberModifyDTO;
+import com.project.silbaram.email.MailSendService;
 import com.project.silbaram.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @Log4j2
@@ -129,6 +131,17 @@ public class MemberController {
         return "redirect:/silbaram/mypage/membermodify";
     }
 
+
+    @Autowired
+    private MailSendService mailSendService;
+    //이메일 인증
+    @GetMapping("/mailCheck")
+    @ResponseBody
+    public String mailCheck(String email) {
+        System.out.println("이메일 인증 요청이 들어옴!");
+        System.out.println("이메일 인증 이메일 : " + email);
+        return mailSendService.joinEmail(email);
+    }
 
 
 
