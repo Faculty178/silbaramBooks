@@ -16,15 +16,18 @@
     </div>
     <div>
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required/>
+        <input type="password" id="password" name="password" onchange="pwCheck()" required/>
+        <span id="pwValid"></span><br>
         <label for="password">비밀번호 재확인:</label>
-        <input type="password" id="password2" name="password2" required/>
-        <span></span>
+        <input type="password" id="password2" name="password2" onchange="pwCheck()" required/>
+        <span id="pwSame"></span><br>
     </div>
 
     <div>
         <label for="nickName">닉네임:</label>
         <input type="text" id="nickName" name="nickName" required/>
+        <button type="button" onclick="checkNickName()">중복확인</button>
+        <span class="nickNameCheck"></span>
     </div>
     <div>
         <label for="name">이름:</label>
@@ -36,17 +39,17 @@
     </div>
     <div>
         <label>성별:</label>
-        <input type="radio" name="gender" value="M" required/><span>남성</span>
-        <input type="radio" name="gender" value="F" required/><span>여성</span>
+        <input type="radio" name="gender" id="genderM" value="M" required/><span>남성</span>
+        <input type="radio" name="gender" id="genderF" value="F" required/><span>여성</span>
     </div>
     <div>
         <label for="phoneNumber">전화번호:</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" required/>
     </div>
     <div>
-        <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" required/>
-        <select id="email-domain" onchange="addDomain()">
+        <label for="email1">이메일:</label>
+        <input type="text" id="email1" name="email1" required/>
+        <select id="email2" name="email2" onchange="addDomain()">
             <option value="">도메인 선택</option>
             <option value="@naver.com">@naver.com</option>
             <option value="@gmail.com">@gmail.com</option>
@@ -57,20 +60,20 @@
         <button type="button" onclick="sendEmailVerification()">이메일 인증</button>
     </div>
     <div>
-        <label for="zipcode">우편번호:</label>
+        <label for="zipcode">(선택)우편번호:</label>
         <input type="text" id="zipcode" name="zipcode"/>
     </div>
     <div>
-        <label for="address">주소:</label>
+        <label for="address">(선택)주소:</label>
         <input type="text" id="address" name="address"/>
     </div>
     <div>
-        <button type="submit" onclick="signupCheck()">회원가입</button>
+        <button type="submit" >회원가입</button>
     </div>
 </form>
 
 <script type="text/javascript">
-    const idChk = 0;
+    let idChk = 0;
 
     function checkId() {
         const id = $('#userId').val(); //id값이 "userId"인 입력란의 값을 저장
@@ -95,7 +98,7 @@
                     alert("사용가능한 아이디입니다");
                     $('.chk-btn').addClass("has-success");
                     $('.chk-btn').removeClass("has-error");
-                    $("#inputPwd").focus();
+                    $("#password").focus();
                     idChk = 1;
                 }
             },
@@ -105,27 +108,63 @@
         });
     };
 </script>
+<script type="text/javascript">
+    let nickChk = 0;
+
+    function checkNickName() {
+        const id = $('#nickName').val(); //id값이 "userId"인 입력란의 값을 저장
+        $.ajax({
+            url: "nickNameCheck", //Controller에서 요청 받을 주소
+            type: "post", //POST 방식으로 전달
+            data: id,
+            dataType: "json", //서버로 돌려받는 값의 타입 지정
+            //서버로 보낼 데이터 설정
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data == true) {
+                    alert("닉네임이 존재합니다. 다른 닉네임을 입력해 주세요");
+                    $('.chk-btn').addClass("has-error");
+                    $('.chk-btn').removeClass("has-success");
+                    $("#nickName").focus();
+                } else {
+                    alert("사용가능한 닉네임입니다");
+                    $('.chk-btn').addClass("has-success");
+                    $('.chk-btn').removeClass("has-error");
+                    $("#name").focus();
+                    nickChk = 1;
+                }
+            },
+            error: function (error) {
+                alert("닉네임을 다시 입력해 주세요");
+            }
+        });
+    };
+</script>
+
 <script>
-  function signupCheck() {
+  function pwCheck() {
     const p1 = document.getElementById('password').value;
     const p2 = document.getElementById('password2').value;
     const pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-    if (!pattern.test(password)) {
-      alert("비밀번호는 영문자, 숫자, 특수문자(!@#$%^&*)를 모두 포함하고 8자 이상 20자 이하여야 합니다.");
-      return false;
-    } else {
+    console.log(pattern);
+    console.log(p1)
+        document.getElementById('pwValid').innerHTML=("비밀번호는 영문자, 숫자, 특수문자(!@#$%^&*)를 모두 포함하고 8자 이상 20자 이하여야 합니다.");
+    if (pattern.test(p1)) {
+        document.getElementById('pwValid').innerHTML='사용가능한 비밀번호입니다';
       if( p1 != p2 ) {
-        alert("비밀번호가 일치 하지 않습니다");
+          document.getElementById('pwSame').innerHTML='비밀번호가 일치하지 않습니다.';
+          document.getElementById('pwSame').style.color='red';
         return false;
       } else{
-        alert("비밀번호가 일치합니다");
+          document.getElementById('pwSame').innerHTML='비밀번호가 일치합니다.';
+          document.getElementById('pwSame').style.color='blue';
         return true;
       }
-
     }
   }
 </script>
+
 
 </body>
 </html>

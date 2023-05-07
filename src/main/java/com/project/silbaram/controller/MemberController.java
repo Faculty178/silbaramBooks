@@ -54,6 +54,12 @@ public class MemberController {
         log.info("idCheck() : "+memberService.isDuplicatedUserId(userId));
         return memberService.isDuplicatedUserId(userId);
     }
+    @PostMapping("/nickNameCheck")
+    @ResponseBody
+    public boolean nickNameCheck(@RequestBody String nickName) {
+        log.info("nickNameCheck() : "+memberService.isDuplicatedUserNickName(nickName));
+        return memberService.isDuplicatedUserNickName(nickName);
+    }
 
 
 

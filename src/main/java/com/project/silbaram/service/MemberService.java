@@ -13,6 +13,7 @@ public interface MemberService {
     Long login(String userId, String password);
 
     boolean isDuplicatedUserId(String userId);
+    boolean isDuplicatedUserNickName(String nickName);
 
     public MemberDTO getMemberByMid(Long mid);
 

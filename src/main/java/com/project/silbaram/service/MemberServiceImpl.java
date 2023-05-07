@@ -36,6 +36,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public boolean isDuplicatedUserNickName(String nickName) {
+        int count = memberDAO.countMemberByUserNickName(nickName);
+        return count > 0; // true == 중복, false면 사용가능한 닉네임
+    }
+
+    @Override
     public MemberDTO getMemberByMid(Long mid) {
         MemberVO memberVO = memberDAO.selectMemberByMid(mid);
         if (memberVO == null) {

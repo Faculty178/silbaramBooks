@@ -18,6 +18,8 @@ public interface MemberDAO {
 
     // 중복아이디 체크
     int countMemberByUserId(String userId);
+    // 중복닉네임 체크
+    int countMemberByUserNickName(String nickName);
 
     // 회원 정보 수정
     void updateMember(MemberVO memberVO);

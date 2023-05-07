@@ -19,19 +19,21 @@ public class MemberMapperTests {
     @Test
     public void insertMemberTest() {
         MemberVO memberVO = MemberVO.builder()
-                .userId("ididid1")
-                .password("password123")
-                .nickName("닉a")
+                .userId("ididid12")
+                .password("password123@")
+                .nickName("닉a2")
                 .name("John Doe")
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
-                .phoneNumber("01012345679")
-                .email("a@example.coma")
+                .phoneNumber("01012345600")
+                .email1("a")
+                .email2("@example1.coma")
 //                .zipcode("12345")
 //                .address("123 Main St, Anytown USA")
 //                .socialLogin(false)
 //                .isAdmin(false)
                 .build();
+        log.info(memberVO.getEmail());
         memberDAO.insertMember(memberVO);
     }
 
@@ -58,7 +60,8 @@ public class MemberMapperTests {
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
                 .phoneNumber("01012345678")
-                .email("ab@example.coma")
+                .email1("a")
+                .email2("@example1.coma")
                 .build();
         log.info(memberVO);
         memberDAO.updateMember(memberVO);
