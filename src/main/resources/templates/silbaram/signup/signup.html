@@ -8,6 +8,7 @@
 <body>
 <h1>회원가입</h1>
 <form th:action="@{/silbaram/signup}" method="post" name="frmMemberInsert">
+    <input type="hidden" name="email">
     <div>
         <label for="userId">아이디:</label>
         <input type="text" id="userId" name="userId" required/>
@@ -108,10 +109,19 @@
         <input type="text" id="address" name="address"/>
     </div>
     <div>
-        <button type="submit" >회원가입</button>
+        <button type="button" class="btn-submit">회원가입</button>
     </div>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('.btn-submit').addEventListener('click', function () {
+            const frm = document.querySelector('form')
+            frm.email.value=frm.email1.value+frm.email2.value
+            alert(frm.email.value)
+        })
 
+    })
+</script>
 <script type="text/javascript">
     let idChk = 0;
 

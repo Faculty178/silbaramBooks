@@ -37,11 +37,11 @@ public class MemberMapperTests {
         memberDAO.insertMember(memberVO);
     }
 
-//    @Test
-//    public void getMemberByIdTest() {
-//        MemberVO memberVO = memberDAO.getMemberById("aaaa");
-//        log.info(memberVO);
-//    }
+    @Test
+    public void getMemberByMidTest() {
+        MemberVO memberVO = memberDAO.selectMemberByMid(1L);
+        log.info(memberVO);
+    }
 
     @Test
     public void countMemberByUserIdTest() {
