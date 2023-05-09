@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.silbaram.dao.BoardDAO">
+
+    <select id="getNow" resultType="string">
+        select now()
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `board` (`title`, `content`, `memberId`, `pageType`, `regDate`)
+        VALUES (#{title}, #{content}, #{memberId}, #{pageType}, now())
+    </insert>
+    
+    <select id="selectAll" resultType="com.project.silbaram.vo.BoardVO">
+        SELECT * FROM `board`
+    </select>
+
+    <select id="selectOne" resultType="com.project.silbaram.vo.BoardVO">
+        SELECT * FROM `board` WHERE `bdid` = #{bdid}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM `board` WHERE `bdid` = #{bdid}
+    </delete>
+
+    <update id="update">
+        UPDATE `board` SET `title` = #{title}, `content` = #{content} WHERE `bdid` = #{bdid}
+    </update>
+
+
+
+
+    <sql id="search">
+        <where>
+            pageType = 'Q'
+            <if test="types != null and types.length > 0">
+                and
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        memberId like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'c'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'tc'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                        or
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'tcw'.toString()">
+                        content like concat('%', #{keyword}, '%')
+                        or
+                        title like concat('%', #{keyword}, '%')
+                        or
+                        memberId like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="list" resultType="com.project.silbaram.vo.BoardVO">
+        select * from `board`
+        <include refid="search"></include>
+        order by bdid desc limit #{skip}, #{size}
+    </select>
+    <!--mybatis는 getXXX, setXXX을 통해서 동작하기때문에 skip은 getSkip()을 호출-->
+
+    <select id="getCount" resultType="int">
+        select count(bdid)
+        from board
+        <include refid="search"></include>
+    </select>
+
+</mapper>
