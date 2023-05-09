@@ -32,16 +32,15 @@ public class MemberDTO {
     private LocalDate birthDate;
     @NotEmpty
     private String gender;
-    @NotEmpty
     private String phoneNumber;
+
     @NotEmpty
-    private String email1;
-    @NotEmpty
-    private String email2;
     private String email;
 
     private String zipcode;
-    private String address;
+    private String address1;
+    private String address2;
+
     private boolean socialLogin;
     @NotNull
     private boolean isAdmin;

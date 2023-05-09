@@ -9,7 +9,6 @@
 <h1>회원가입</h1>
 <form th:action="@{/silbaram/signup}" method="post" name="frmMemberInsert">
     <input type="hidden" name="email">
-    <input type="hidden" name="address">
     <div>
         <label for="userId">아이디:</label>
         <input type="text" id="userId" name="userId" required/>
@@ -45,10 +44,6 @@
         <input type="radio" name="gender" id="genderF" value="F" required/><span>여성</span>
     </div>
     <div>
-        <label for="phoneNumber">전화번호:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required/>
-    </div>
-    <div>
         <label for="email1">이메일:</label>
         <input type="text" id="email1" name="email1" required/>
         <select id="email2" name="email2" onchange="addDomain()">
@@ -64,6 +59,10 @@
         <span id="mail-check-warn"></span>
     </div>
     <div>
+        <label for="phoneNumber">(선택)전화번호:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required/>
+    </div>
+    <div>
         <label for="zipcode">(선택)우편번호:</label>
         <input id="zipcode" name="zipcode" type="text" class="form-control" placeholder="zipcode" readonly>
         <input type="button" value="우편번호 검색" onclick="execDaumPostcode();">
@@ -77,7 +76,7 @@
         <input name="address2" id="address2" type="text">
     </div>
     <div>
-        <button type="button" class="btn-submit">회원가입</button>
+        <button type="submit" class="btn-submit">회원가입</button>
     </div>
 </form>
 <script src="/js/signup.js"></script>

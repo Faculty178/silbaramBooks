@@ -1,10 +1,9 @@
 
-/* 이메일, 주소 */
+/* 이메일 */
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.btn-submit').addEventListener('click', function () {
         const frm = document.querySelector('form')
         frm.email.value = frm.email1.value + frm.email2.value
-        frm.address.value = frm.address1.value + frm.address2.value
     })
 })
 
@@ -50,8 +49,6 @@ function pwCheck() {
     const p2 = document.getElementById('password2').value;
     const pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-    console.log(pattern);
-    console.log(p1)
     document.getElementById('pwValid').innerHTML = ("비밀번호는 영문자, 숫자, 특수문자(!@#$%^&*)를 모두 포함하고 8자 이상 20자 이하여야 합니다.");
     if (pattern.test(p1)) {
         document.getElementById('pwValid').innerHTML = '사용가능한 비밀번호입니다';
@@ -103,7 +100,6 @@ function checkNickName() {
 /* 이메일 인증 */
 $('#mail-Check-Btn').click(function () {
     const email = $('#email1').val() + $('#email2').val(); // 이메일 주소값 얻어오기!
-    console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
     const checkInput = $('.mail-check-input') // 인증번호 입력하는곳
 
     $.ajax({

@@ -27,17 +27,8 @@
 
 <form th:action="@{/silbaram/mypage/membermodify}"  th:object="${memberDTO}"  method="post" name="frmMemberInsert">
     <input type="hidden" name="email">
-    <input type="hidden" name="address">
 
-    <div>
-        <label for="phoneNumber">전화번호:</label>
-        <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" required />
-    </div>
-    <div>
-        <label for="email">이메일:</label>
-        <input type="email" id="email" th:field="*{email}" required />
 
-    </div>
     <div>
         <label for="email1">이메일:</label>
         <input type="text" id="email1" name="email1" th:field="*{email}" required/>
@@ -64,17 +55,21 @@
         <span id="mail-check-warn"></span>
     </div>
     <div>
+        <label for="phoneNumber">(선택)전화번호:</label>
+        <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" required />
+    </div>
+    <div>
         <label for="zipcode">(선택)우편번호:</label>
-        <input id="zipcode" name="zipcode" type="text" class="form-control" placeholder="zipcode" readonly>
+        <input id="zipcode" name="zipcode" type="text" class="form-control" placeholder="zipcode" th:field="*{zipcode}" readonly>
         <input type="button" value="우편번호 검색" onclick="execDaumPostcode();">
     </div>
     <div class="form-group row">
         <label for="address1">주소1</label>
-        <input name="address1" id="address1" type="text" readonly>
+        <input name="address1" id="address1" type="text" th:field="*{address1}" readonly>
     </div>
     <div class="form-group row">
         <label for="address2">주소2</label>
-        <input name="address2" id="address2" type="text">
+        <input name="address2" id="address2" type="text" th:field="*{address2}" >
     </div>
     <div>
         <button type="submit" onclick="checkModify()">회원정보 수정</button>
