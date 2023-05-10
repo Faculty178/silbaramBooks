@@ -1,5 +1,6 @@
 package com.project.silbaram.controller;
 
+import com.project.silbaram.service.MyBookListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -9,11 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/silbaram")
+@RequestMapping("/silbaram/mypage/mybooks")
 public class MyBookListController {
 
-    @GetMapping("/mybooklist")
-    public String myBookListGET(){
-        return "silbaram/member/my_book_list";
+    private final MyBookListService myBookListService;
+
+    @GetMapping("/")
+    public void MyBookListGET() {
+
     }
+
+
+
+
 }

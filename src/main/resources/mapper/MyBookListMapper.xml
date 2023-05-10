@@ -3,8 +3,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.silbaram.dao.MyBookListDAO">
 
-    <select id="getAllMyBooks" resultType="com.project.silbaram.vo.BookVO">
-        SELECT * FROM `book`
+<!-- 최근구매순 조회 -->
+    <select id="selectAllMyBooks" resultType="com.project.silbaram.vo.OrderListVO">
+        SELECT * FROM `orderlist` WHERE `memberId` = #{memberId}
+        ORDER BY `orderDate` DESC;
     </select>
+
+<!--  가나다순 조회  -->
+    <select id="selectAllMyBooksBySpellASC" resultType="com.project.silbaram.vo.OrderListVO">
+        SELECT o.*
+        FROM `orderlist` o
+                 JOIN `book` b ON o.bookId = b.bkid
+        WHERE o.`memberId` = #{memberId}
+        ORDER BY b.`name` ASC;
+    </select>
+
+<!--  검색  -->
+    <select id="getOrderByMemberAndKeyword" resultType="com.project.silbaram.vo.OrderListVO">
+        SELECT o.*, b.title
+        FROM orderlist o
+                 JOIN book b ON o.bookId = b.bkid
+        WHERE o.memberId = #{memberId}
+          AND b.title LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY o.orderDate DESC
+    </select>
+
+
+
+
 
 </mapper>

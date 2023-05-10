@@ -17,7 +17,7 @@
     </select>
 
     <select id="selectById" parameterType="int" resultType="com.project.silbaram.vo.BookVO">
-        select * from `book` where bkid = #{id}
+        select * from `book` where bkid = #{bkid}
     </select>
 
     <update id="updateBook" parameterType="com.project.silbaram.vo.BookVO">
