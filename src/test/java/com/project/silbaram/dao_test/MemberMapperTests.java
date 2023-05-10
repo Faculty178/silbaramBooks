@@ -19,27 +19,28 @@ public class MemberMapperTests {
     @Test
     public void insertMemberTest() {
         MemberVO memberVO = MemberVO.builder()
-                .userId("ididid1")
-                .password("password123")
-                .nickName("닉a")
+                .userId("ididi12")
+                .password("ppassword123@")
+                .nickName("닉aa2")
                 .name("John Doe")
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
-                .phoneNumber("01012345679")
-                .email("a@example.coma")
+                .phoneNumber("01010000000")
+                .email("@example1.com")
 //                .zipcode("12345")
 //                .address("123 Main St, Anytown USA")
 //                .socialLogin(false)
 //                .isAdmin(false)
                 .build();
+        log.info(memberVO.getEmail());
         memberDAO.insertMember(memberVO);
     }
 
-//    @Test
-//    public void getMemberByIdTest() {
-//        MemberVO memberVO = memberDAO.getMemberById("aaaa");
-//        log.info(memberVO);
-//    }
+    @Test
+    public void getMemberByMidTest() {
+        MemberVO memberVO = memberDAO.selectMemberByMid(1L);
+        log.info(memberVO);
+    }
 
     @Test
     public void countMemberByUserIdTest() {
@@ -58,7 +59,7 @@ public class MemberMapperTests {
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
                 .phoneNumber("01012345678")
-                .email("ab@example.coma")
+                .email("@example1.coma")
                 .build();
         log.info(memberVO);
         memberDAO.updateMember(memberVO);

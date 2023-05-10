@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-book 서재</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="row">
+    <!-- 책 1 -->
+
+    <div class="book">
+        <div class="cell">
+            <img src="book1.jpg" alt="Book 1">
+        </div>
+        <div class="cell">bkid</div>
+        <div class="cell">bookImage</div>
+        <div class="cell">name</div>
+        <div class="cell">writer</div>
+        <div class="cell">
+            <audio controls>
+                <source src="audio1.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+    <div class="book" th:with="link = ${pageRequestDTO.getLink()}">
+        <div class="cell" th:each="dto:${responseDTO.dtoList}">[[${dto.bkid}]]</div>
+        <div class="cell" th:each="dto:${responseDTO.dtoList}">
+            <a th:href="|@{/silbaram/board/read_qna(bdid =${dto.bkid})}&${link}|"> [[${dto.name}]]</a>
+        </div>
+        <div class="cell" th:each="dto:${responseDTO.dtoList}">[[${dto.memberId}]]</div>
+        <div class="cell" th:each="dto:${responseDTO.dtoList}">
+            [[${#temporals.format(dto.regDate,'yyyy-MM-dd')}]]
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

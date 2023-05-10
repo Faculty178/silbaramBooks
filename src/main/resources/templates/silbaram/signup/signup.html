@@ -1,129 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>회원가입</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <h1>회원가입</h1>
 <form th:action="@{/silbaram/signup}" method="post" name="frmMemberInsert">
-  <div>
-    <label for="userId">아이디:</label>
-    <input type="text" id="userId" name="userId" required />
-    <button type="button" onclick="checkId()">중복확인</button>
-    <span class="idCheck"></span>
-  </div>
-  <div>
-    <label for="password">비밀번호:</label>
-    <input type="password" id="password" name="password" required />
-    <span></span>
-  </div>
-  <div>
-    <label for="nickName">닉네임:</label>
-    <input type="text" id="nickName" name="nickName" required />
-  </div>
-  <div>
-    <label for="name">이름:</label>
-    <input type="text" id="name" name="name" required />
-  </div>
-  <div>
-    <label for="birthDate">생년월일:</label>
-    <input type="date" id="birthDate" name="birthDate" required />
-  </div>
-  <div>
-    <label>성별:</label>
-    <input type="radio" name="gender" value="M" required /><span>남성</span>
-    <input type="radio" name="gender" value="F" required /><span>여성</span>
-  </div>
-  <div>
-    <label for="phoneNumber">전화번호:</label>
-    <input type="tel" id="phoneNumber" name="phoneNumber" required />
-  </div>
-  <div>
-    <label for="email">이메일:</label>
-    <input type="email" id="email" name="email" required />
-  </div>
-  <div>
-    <label for="zipcode">우편번호:</label>
-    <input type="text" id="zipcode" name="zipcode" />
-  </div>
-  <div>
-    <label for="address">주소:</label>
-    <input type="text" id="address" name="address" />
-  </div>
-  <div>
-    <button type="submit">회원가입</button>
-  </div>
-</form>
+    <input type="hidden" name="email">
+    <div>
+        <label for="userId">아이디:</label>
+        <input type="text" id="userId" name="userId" required/>
+        <button type="button" onclick="checkId()">중복확인</button>
+        <span class="idCheck"></span>
+    </div>
+    <div>
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" onchange="pwCheck()" required/>
+        <span id="pwValid"></span><br>
+        <label for="password">비밀번호 재확인:</label>
+        <input type="password" id="password2" name="password2" onchange="pwCheck()" required/>
+        <span id="pwSame"></span><br>
+    </div>
 
-<script type="text/javascript">
-  const idChk = 0;
-  function checkId(){
-    const id = $('#userId').val(); //id값이 "userId"인 입력란의 값을 저장
-    if (!/^[a-z0-9_-]{5,15}$/g.test(id)) {
-      alert("아이디는 5~15자의 영문소문자, 숫자, '_', '-' 만 가능합니다");
-      return;
-    }
-    $.ajax({
-      url:"idCheck", //Controller에서 요청 받을 주소
-      type:"post", //POST 방식으로 전달
-      data:id,
-      dataType : "json", //서버로 돌려받는 값의 타입 지정
-      //서버로 보낼 데이터 설정
-      contentType : "application/json; charset=utf-8",
-      success:function(data){
-        if(data == true){
-          alert("아이디가 존재합니다. 다른 아이디를 입력해 주세요");
-          $('.chk-btn').addClass("has-error");
-          $('.chk-btn').removeClass("has-success");
-          $("#userId").focus();
-        } else {
-          alert("사용가능한 아이디입니다");
-          $('.chk-btn').addClass("has-success");
-          $('.chk-btn').removeClass("has-error");
-          $("#inputPwd").focus();
-          idChk=1;
-        }
-      },
-      error:function(error){
-        alert("아이디를 다시 입력해 주세요");
-      }
-    });
-  };
-</script>
-<script>
-  // // 3. ajax를 이용한 실시간 Id 중복확인
-  // // 2번에서 작업한 파일을 이용
-  // const inputId = document.querySelector('input[name=id]');
-  // inputId.addEventListener('keyup', function () {
-  //   const  id = frmMemberInsert.id.value; // 아이디 input에 있는 값
-  //   const idCheck = document.querySelector('.idCheck'); // 결과 문자열이 표현될 영역
-  //   xhr.open('GET', 'ajaxIdCheck.jsp?id=' + id); // HTTP 요청 초기화. 통신 방식와  url 설정
-  //   xhr.send();
-  //   //이벤트 등록. XMLHttpRequest 객체의 readyState 프로퍼티 값이 변할 때마다 자동으로 호출
-  //   xhr.onreadystatechange = () => {
-  //     // readyState 프로퍼티의 값이 DONE : 요청한 데이터의 처리가 완료되어 응답할 준비가 완료됨
-  //     if(xhr.readyState !== XMLHttpRequest.DONE) return;
-  //
-  //     if(xhr.status === 200) { // 서버(url)에 문서가 존재함
-  //       console.log(xhr.response);
-  //       const json = JSON.parse(xhr.response);
-  //       if (json.result === 'true') {
-  //         idCheck.style.color = 'red';
-  //         idCheck.innerHTML ='동일한 아이디가 있습니다.';
-  //       }
-  //       else {
-  //         idCheck.style.color = 'grey';
-  //         idCheck.innerHTML ='동일한 아이디가 없습니다.';
-  //       }
-  //     }
-  //     else { // 서버(url)에 문서가 존재하지 않음
-  //       console.error('Error', xhr.status, xhr.statusText);
-  //     }
-  //   }
-  // });
-</script>
+    <div>
+        <label for="nickName">닉네임:</label>
+        <input type="text" id="nickName" name="nickName" required/>
+        <button type="button" onclick="checkNickName()">중복확인</button>
+        <span class="nickNameCheck"></span>
+    </div>
+    <div>
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required/>
+    </div>
+    <div>
+        <label for="birthDate">생년월일:</label>
+        <input type="date" id="birthDate" name="birthDate" required/>
+    </div>
+    <div>
+        <label>성별:</label>
+        <input type="radio" name="gender" id="genderM" value="M" required/><span>남성</span>
+        <input type="radio" name="gender" id="genderF" value="F" required/><span>여성</span>
+    </div>
+    <div>
+        <label for="email1">이메일:</label>
+        <input type="text" id="email1" name="email1" required/>
+        <select id="email2" name="email2" onchange="addDomain()">
+            <option value="">도메인 선택</option>
+            <option value="@naver.com">@naver.com</option>
+            <option value="@gmail.com">@gmail.com</option>
+            <option value="@daum.net">@daum.net</option>
+            <option value="@hotmail.com">@hotmail.com</option>
+            <option value="@icloud.com">@icloud.com</option>
+        </select>
+        <button type="button" id="mail-Check-Btn">이메일 인증</button>
+        <input class="mail-check-input" placeholder="인증번호 6자리를 입력해주세요." disabled="disabled" maxlength="6">
+        <span id="mail-check-warn"></span>
+    </div>
+    <div>
+        <label for="phoneNumber">(선택)전화번호:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required/>
+    </div>
+    <div>
+        <label for="zipcode">(선택)우편번호:</label>
+        <input id="zipcode" name="zipcode" type="text" class="form-control" placeholder="zipcode" readonly>
+        <input type="button" value="우편번호 검색" onclick="execDaumPostcode();">
+    </div>
+    <div class="form-group row">
+        <label for="address1">주소1</label>
+        <input name="address1" id="address1" type="text" readonly>
+    </div>
+    <div class="form-group row">
+        <label for="address2">주소2</label>
+        <input name="address2" id="address2" type="text">
+    </div>
+    <div>
+        <button type="submit" class="btn-submit">회원가입</button>
+    </div>
+</form>
+<script src="/js/signup.js"></script>
+<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+
 
 </body>
 </html>

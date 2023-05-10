@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Silbaram</title>
 </head>
 <body>
+<h1>Silbaram</h1>
+<!---->
+
+<ul>
+    <li th:if="${session.mid == null}">
+        <a href="/silbaram/signup">회원가입</a>
+    </li>
+    <li th:if="${session.mid == null}">
+        <a href="/silbaram/login">로그인</a>
+    </li>
+    <li th:if="${session.mid}">
+        <a href="/silbaram/mypage">마이페이지</a>
+    </li>
+    <li th:if="${session.mid}">
+        <form action="/silbaram/logout" method="post">
+            <button type="submit">로그아웃</button>
+        </form>
+    </li>
+</ul>
+
+<p>여기는 메인 페이지입니다.</p>
 
 </body>
 </html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.silbaram.dao.ReviewDAO">
+
+    <select id="getNow" resultType="string">
+        select now()
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `review` (`title`, `content`, `memberId`, `reviewLike`, `bookId`, `regDate`)
+        VALUES (#{title}, #{content}, #{memberId}, #{reviewLike}, #{bookId}, #{regDate})
+    </insert>
+
+    <select id="selectAll" resultType="com.project.silbaram.vo.ReviewVO">
+        SELECT * FROM `review` order by `rid` desc
+    </select>
+
+    <select id="selectOne" resultType="com.project.silbaram.vo.ReviewVO">
+        SELECT * FROM `review` WHERE `rid` = #{rid}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM `review` WHERE `rid` = #{rid}
+    </delete>
+
+    <update id="update">
+        UPDATE `review` SET `title` = #{title}, `content` = #{content} WHERE `rid` = #{rid}
+    </update>
+
+
+
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="selectList" resultType="com.project.silbaram.vo.ReviewVO">
+        select * from `review`
+        <include refid="search"></include>
+        order by rid desc limit #{skip}, #{size}
+    </select>
+<!--    mybatis는 getXXX, setXXX을 통해서 동작하기때문에 skip은 getSkip()을 호출-->
+
+    <select id="getCount" resultType="int">
+        select count(rid)
+        from review
+        <include refid="search"></include>
+    </select>
+
+</mapper>

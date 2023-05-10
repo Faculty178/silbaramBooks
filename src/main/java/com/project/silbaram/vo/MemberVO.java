@@ -20,7 +20,8 @@ public class MemberVO {
     private String phoneNumber;
     private String email;
     private String zipcode;
-    private String address;
+    private String address1;
+    private String address2;
     private boolean socialLogin;
     private boolean isAdmin;
     private LocalDate regDate;

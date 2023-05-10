@@ -27,7 +27,7 @@ public class MemberServiceTest {
                 .birthDate(LocalDate.of(2000,01,01))
                 .gender("여")
                 .phoneNumber("01012345078")
-                .email("service@example.com")
+                .email("@example1.coma")
 //                .zipcode("12345")
 //                .address("123 Main St, Anytown USA")
 //                .socialLogin(false)
