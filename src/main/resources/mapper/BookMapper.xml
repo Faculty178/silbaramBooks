@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.silbaram.dao.BookDAO">
+
+
+    <select id="list" resultType="com.project.silbaram.vo.BookVO">
+        SELECT * FROM `book` order by `bkid` desc
+    </select>
+
+    <select id="selectOne" resultType="com.project.silbaram.vo.BookVO">
+        SELECT * FROM `book` WHERE `bkid` = #{bkid}
+    </select>
+
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="selectList" resultType="com.project.silbaram.vo.BookVO">
+        select * from `book`
+        <include refid="search"></include>
+        order by bkid desc limit #{skip}, #{size}
+    </select>
+    <!--mybatis는 getXXX, setXXX을 통해서 동작하기때문에 skip은 getSkip()을 호출-->
+
+    <select id="getCount" resultType="int">
+        select count(bkid)
+        from `book`
+        <include refid="search"></include>
+    </select>
+
+</mapper>

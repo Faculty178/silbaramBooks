@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.silbaram.dao.MemberDAO">
+
+
+    <insert id="insertMember">
+        INSERT INTO `member` (`userId`, `password`, `nickName`, `name`, `birthDate`, `gender`, `phoneNumber`,
+                              `email`, `zipcode`, `address`, `socialLogin`, `isAdmin`)
+        VALUES (#{userId}, #{password}, #{nickName}, #{name}, #{birthDate}, #{gender}, #{phoneNumber},
+                #{email}, #{zipcode}, #{address}, #{socialLogin}, #{isAdmin})
+    </insert>
+
+    <select id="getMemberById" resultType="com.project.silbaram.vo.MemberVO">
+        SELECT * FROM `member` WHERE `userId` = #{userId}
+    </select>
+
+    <select id="countMemberByUserId" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM `member` WHERE `userId` = #{userId}
+    </select>
+
+<!--    <update id="updateUuid" parameterType="String, String">-->
+<!--        UPDATE `member` SET `uuid` = #{uuid} WHERE `mid` = #{userId}-->
+<!--    </update>-->
+
+<!--&lt;!&ndash;    <select id="selectUuid" resultType="com.project.silbaram.vo.MemberVO">&ndash;&gt;-->
+<!--&lt;!&ndash;        SELECT `mid`,`mpw`, `mname`, `uuid` FROM `member` WHERE `uuid` = #{uuid}&ndash;&gt;-->
+<!--&lt;!&ndash;    </select>&ndash;&gt;-->
+
+
+
+
+
+</mapper>
+

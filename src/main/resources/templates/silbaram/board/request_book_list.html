@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/basic.html}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+</head>
+
+<body>
+
+<center>
+	책 요청 게시판(<span id="memoCount">0</span>개)
+	<form id="form1">
+		<div>
+			<table width="600" style="border-collapse:collapse; border:1 solid slategray;">
+				<tr align="center">
+					<td width="400"><input type="text" size="58" id="content" placeholder="책 이름,작가,출판사 등을 입력해주세요"></td>
+					<td width="100"><input type="text" size="8" id="memberId" placeholder="작성자"></td>
+					<td width="100"><input type="submit" value="등록"></td>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" align="center">
+						<!--비어있을시 빨간색으로 오류 출력-->
+						<span id="spanMsg" runat="server" style="color:Red"/>
+					</td>
+				</tr>
+			</table>
+			<hr/>
+		</div>
+		<!--요청 게시글 목록-->
+		
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					Book Request Board List
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Book Request Board List</h5>
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Bdid</th>
+							<th scope="col">Content</th>
+							<th scope="col">MemberId</th>
+							<th scope="col">RegDate</th>
+						</tr>
+						</thead>
+						
+						<tbody th:with="link = ${pageRequestDTO.getLink()}">
+						<tr th:each="dto:${responseDTO.dtoList}">
+							<th scope="col">[[${dto.bdid}]]</th>
+							<td> [[${dto.content}]]</td>
+							<td>[[${dto.memberId}]]</td>
+							<td>[[${#temporals.format(dto.regDate,'yyyy-MM-dd')}]]</td>
+						</tr>
+						</tbody>
+					</table>
+					<!--페이지 버튼-->
+					<div class="float-end">
+						<ul class="pagination flex-wrap">
+							<div th:if="${responseDTO.total > 0}">
+								<li class="page-item" th:if="${responseDTO.prev}">
+									<a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>
+								</li>
+								<!--#numbers.sequence : 특정한 범위의 연속된 숫자를 만듦-->
+								<th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+									<li th:class="${responseDTO.page == i} ? 'page-item active' : 'page-item'">
+										<a class="page-link" th:data-num="${i}">[[${i}]]</a>
+										<!--data-num이라는 속성으로 페이지 처리-->
+									</li>
+								</th:block>
+								<li class="page-item" th:if="${responseDTO.next}">
+									<a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		</div>
+	</form>
+</center>
+</body>
+</html>
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <div class="row mt-3">-->
+<!--&lt;!&ndash;        <form action="/board/request_book_qna" method="get">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="col">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input type="hidden" name="size" th:value="${pageRequestDTO.size}">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="input-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="input-group-prepend">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <select class="form-select" name="type">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="">-&#45;&#45;</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목+내용</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="input-group-append">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button class="btn btn-outline-secondary searchBtn" type="submit">Search</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button class="btn btn-outline-secondary clearBtn" type="button">Clear</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
+<!--        <div class="col">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header">-->
+<!--                    Request Board List-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">Request Board List</h5>-->
+<!--                    <table class="table">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th scope="col">Bdid</th>-->
+<!--                            <th scope="col">Title</th>-->
+<!--                            <th scope="col">MemberId</th>-->
+<!--                            <th scope="col">RegDate</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+
+<!--                        <tbody th:with="link = ${pageRequestDTO.getLink()}">-->
+<!--                        <tr th:each="dto:${responseDTO.boardList}">-->
+<!--                            <th scope="col">[[${dto.bdid}]]</th>-->
+<!--                            <td><a th:href="|@{/silbaram/board/request_book_list(bdid =${dto.bdid})}&${link}|"> [[${dto.title}]]</a></td>-->
+<!--                            <td>[[${dto.memberId}]]</td>-->
+<!--                            <td>[[${#temporals.format(dto.regDate,'yyyy-MM-dd')}]]</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                    &lt;!&ndash;페이지 버튼&ndash;&gt;-->
+<!--                    <div class="float-end">-->
+<!--                        <ul class="pagination flex-wrap">-->
+<!--                            <li class="page-item" th:if="${responseDTO.prev}">-->
+<!--                                <a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>-->
+<!--                            </li>-->
+<!--                            &lt;!&ndash;#numbers.sequence : 특정한 범위의 연속된 숫자를 만듦&ndash;&gt;-->
+<!--                            <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">-->
+<!--                                <li th:class="${responseDTO.page == i} ? 'page-item active' : 'page-item'">-->
+<!--                                    <a class="page-link" th:data-num="${i}">[[${i}]]</a>-->
+<!--                                    &lt;!&ndash;data-num이라는 속성으로 페이지 처리&ndash;&gt;-->
+<!--                                </li>-->
+<!--                            </th:block>-->
+<!--                            <li class="page-item" th:if="${responseDTO.next}">-->
+<!--                                <a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;modal&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="modal" tabindex="-1">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="modal-dialog">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="modal-header">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <h5 class="modal-title">Modal title</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="modal-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>완료</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="modal-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="button" class="btn btn-primary">Save changes</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+
+<!--</div>-->
+
+<!--<script layout:fragment="script" th:inline="javascript">-->
+<!--    document.querySelector(".pagination").addEventListener("click", function (e) {-->
+<!--        e.preventDefault();-->
+<!--        e.stopPropagation();-->
+
+<!--        const target = e.target;-->
+
+<!--        if (target.tagName !== 'A') {-->
+<!--            return;-->
+<!--        }-->
+
+<!--        const num = target.getAttribute("data-num");-->
+<!--        const formObj = document.querySelector("form");-->
+
+<!--        formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`;-->
+<!--        formObj.submit();-->
+
+<!--    }, false)-->
+
+<!--    document.querySelector(".clearBtn").addEventListener("click", function (e) {-->
+<!--        e.preventDefault();-->
+<!--        e.stopPropagation();-->
+
+<!--        self.location = '/silbaram/board/request_book_list';-->
+<!--    }, false)-->
+
+<!--    //show modal-->
+<!--    //redirectAttributes.addFlashAttribute("result", bno);의 result 변수를 이용해서 bno가 전달됨-->
+<!--    // const result = [[${result}]];-->
+
+<!--    // const modal = new bootstrap.Modal(document.querySelector(".modal"));-->
+
+
+<!--</script>-->
+
+
+<!--</body>-->
+<!--</html>-->
