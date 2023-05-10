@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.silbaram.dao.CartDAO">
+
+
+    <insert id="insertCart">
+        INSERT INTO cart (memberId, bookId) VALUES (#{memberId}, #{bookId});
+    </insert>
+
+    <select id="selectAll" resultType="com.project.silbaram.vo.CartVO">
+        <!--select * from cart order by lkid -->
+         SELECT * from cart LEFT OUTER JOIN book on (cart.bookId = book.bkid) WHERE memberId = #{memberId};
+ <!-- SELECT * from cart LEFT OUTER JOIN book on (cart.bookId = book.bkid) WHERE memberId = 1001; -->
+    </select>
+
+    <select id="delete">
+        DELETE from cart where lkid = #{lkid}
+    </select>
+
+</mapper>
