@@ -6,9 +6,9 @@
 <!--회원가입-->
     <insert id="insertMember"  useGeneratedKeys="true" keyProperty="mid">
         INSERT INTO `member` (`userId`, `password`, `nickName`, `name`, `birthDate`, `gender`, `phoneNumber`,
-                              `email`, `zipcode`, `address`, `socialLogin`, `isAdmin`)
+                              `email`, `zipcode`, `address1`,`address2`, `socialLogin`, `isAdmin`)
         VALUES (#{userId}, #{password}, #{nickName}, #{name}, #{birthDate}, #{gender}, #{phoneNumber},
-                #{email}, #{zipcode}, #{address}, #{socialLogin}, #{isAdmin})
+                #{email}, #{zipcode}, #{address1}, #{address2}, #{socialLogin}, #{isAdmin})
     </insert>
 
 <!--  아이디 중복 조회  -->
@@ -38,7 +38,8 @@
             phoneNumber = IFNULL(#{phoneNumber}, phoneNumber),
             email = IFNULL(#{email}, email),
             zipcode = IFNULL(#{zipcode}, zipcode),
-            address = IFNULL(#{address}, address)
+            address1 = IFNULL(#{address1}, address1),
+            address2 = IFNULL(#{address2}, address2)
         WHERE mid = #{mid};
 
     </update>

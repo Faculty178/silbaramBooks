@@ -17,27 +17,26 @@ public class MemberServiceTest {
     @Autowired
     private MemberServiceImpl memberService;
 
-//    @Test
-//    public void addMemberTest() {
-//        MemberDTO memberDTO = MemberDTO.builder()
-//                .userId("service")
-//                .password("password123")
-//                .nickName("service123")
-//                .name("service1")
-//                .birthDate(LocalDate.of(2000,01,01))
-//                .gender("여")
-//                .phoneNumber("01012345078")
-//                .email1("a")
-//                .email2("@example1.coma")
-////                .zipcode("12345")
-////                .address("123 Main St, Anytown USA")
-////                .socialLogin(false)
-////                .isAdmin(false)
-//                .build();
-//        log.info(memberDTO);
-//        boolean result = memberService.addMember(memberDTO);
-//        Assertions.assertTrue(result);
-//    }
+    @Test
+    public void addMemberTest() {
+        MemberDTO memberDTO = MemberDTO.builder()
+                .userId("service")
+                .password("password123")
+                .nickName("service123")
+                .name("service1")
+                .birthDate(LocalDate.of(2000,01,01))
+                .gender("여")
+                .phoneNumber("01012345078")
+                .email("@example1.coma")
+//                .zipcode("12345")
+//                .address("123 Main St, Anytown USA")
+//                .socialLogin(false)
+//                .isAdmin(false)
+                .build();
+        log.info(memberDTO);
+        boolean result = memberService.addMember(memberDTO);
+        Assertions.assertTrue(result);
+    }
 
     @Test
     public void loginTest() {
