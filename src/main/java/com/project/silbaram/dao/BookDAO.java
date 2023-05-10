@@ -16,7 +16,7 @@ public interface BookDAO {
 
 
     List<BoardVO> selectAll();
-    BookVO selectOne(int bkid);
+    BookVO selectOne(Long bkid);
     List<BookVO> list(PageRequestDTO pageRequestDTO);
     int getCount(PageRequestDTO pageRequestDTO);
 
