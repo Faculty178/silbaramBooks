@@ -16,6 +16,8 @@ public class MyBookListMapperTests {
     @Autowired
     private MyBookListDAO myBookListDAO;
 
+
+
 //    @Test
 //    public void getAllMyBooksTest() {
 //        Long memberId = 7L; // 회원 ID 값

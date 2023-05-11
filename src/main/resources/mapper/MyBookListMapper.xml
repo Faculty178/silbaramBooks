@@ -3,15 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.silbaram.dao.MyBookListDAO">
 
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="oid">
+        INSERT INTO `orderlist` (`bookId`, `memberId`, `totalPrice`, `orderNum`)
+        VALUES
+            (#{bookId}, #{memberId}, #{totalPrice}, #{orderNum});
+    </insert>
+
 <!-- 최근구매순 조회 -->
     <select id="selectAllMyBooks" resultType="com.project.silbaram.vo.OrderListVO">
-        SELECT * FROM `orderlist` WHERE `memberId` = #{memberId}
+        SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
+        FROM `orderlist` o
+                 JOIN `book` b ON o.bookId = b.bkid
+        WHERE o.`memberId` = #{memberId}
         ORDER BY `orderDate` DESC;
     </select>
 
 <!--  가나다순 조회  -->
     <select id="selectAllMyBooksBySpellASC" resultType="com.project.silbaram.vo.OrderListVO">
-        SELECT o.*
+        SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
         FROM `orderlist` o
                  JOIN `book` b ON o.bookId = b.bkid
         WHERE o.`memberId` = #{memberId}
@@ -20,7 +29,7 @@
 
 <!--  검색  -->
     <select id="getOrderByMemberAndKeyword" resultType="com.project.silbaram.vo.OrderListVO">
-        SELECT o.*, b.name
+        SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
         FROM orderlist o
                  JOIN book b ON o.bookId = b.bkid
         WHERE o.memberId = #{memberId}
@@ -34,15 +43,15 @@
                 and
                 <foreach collection="types" item="type" open="(" close=")" separator=" OR">
                     <if test="type == 'n'.toString()">
-                        `name` like concat('%', #{keyword}, '%')
+                        book.name like concat('%', #{keyword}, '%')
                     </if>
                     <if test="type == 'w'.toString()">
-                        `writer` like concat('%', #{keyword}, '%')
+                        book.writer like concat('%', #{keyword}, '%')
                     </if>
                     <if test="type == 'nw'.toString()">
-                        `name` like concat('%', #{keyword}, '%')
-                        or
-                        `writer` like concat('%', #{keyword}, '%')
+                        book.name like concat('%', #{keyword}, '%')
+                        OR
+                        book.writer like concat('%', #{keyword}, '%')
                     </if>
                 </foreach>
             </if>
@@ -50,13 +59,10 @@
     </sql>
 
     <select id="getCount" resultType="int">
-        select count(oid)
+        select count(orderlist.oid)
         from `orderlist`
+        join `book` on orderlist.bookId = book.bkid
         <include refid="search"></include>
     </select>
-
-
-
-
 
 </mapper>

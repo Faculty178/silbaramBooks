@@ -10,8 +10,10 @@ import java.util.List;
 @Mapper
 public interface MyBookListDAO {
 
+    void insertOrder(OrderListVO orderListVO);
+
     // 전체조회
-    List<OrderListVO> selectAllMyBooks(Long memberId);
+    List<OrderListVO> selectAllMyBooks(Long memberId, PageRequestDTO PageRequestDTO);
 
     int getCount(PageRequestDTO pageRequestDTO);
 

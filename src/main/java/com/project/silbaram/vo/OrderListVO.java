@@ -1,5 +1,6 @@
 package com.project.silbaram.vo;
 
+import com.project.silbaram.dto.BookDTO;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderListVO {
+
     private Long oid;
     private Long bookId;
     private Long memberId;
@@ -17,4 +19,12 @@ public class OrderListVO {
     private int totalPrice;
     private LocalDate orderDate;
     private String orderNum;
+
+    /* book */
+    private BookDTO book;
+    private String bookName;
+    private String writerName;
+
+
+
 }

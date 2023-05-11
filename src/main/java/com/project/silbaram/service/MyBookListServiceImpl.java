@@ -1,6 +1,7 @@
 package com.project.silbaram.service;
 
 import com.project.silbaram.dao.MyBookListDAO;
+import com.project.silbaram.dto.BookDTO;
 import com.project.silbaram.dto.OrderListDTO;
 import com.project.silbaram.dto.PageRequestDTO;
 import com.project.silbaram.dto.PageResponseDTO;
@@ -31,12 +32,14 @@ public class MyBookListServiceImpl implements MyBookListService {
 
     @Override
     public PageResponseDTO<OrderListDTO> getAllMyBooks(Long memberId,PageRequestDTO pageRequestDTO) {
-        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(memberId);
+        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(memberId, pageRequestDTO);
         log.info(voList);
         List<OrderListDTO> dtoList = new ArrayList<>();
         for (OrderListVO orderListVO: voList
              ) {
-            dtoList.add(modelMapper.map(orderListVO, OrderListDTO.class)); // vo를 dto로 mapping
+            OrderListDTO dto =modelMapper.map(orderListVO, OrderListDTO.class); // vo를 dto로 mapping
+            dto.setBook(modelMapper.map(orderListVO, BookDTO.class));
+            dtoList.add(dto);
         }
         // 전체 갯수
         int total = myBookListDAO.getCount(pageRequestDTO);

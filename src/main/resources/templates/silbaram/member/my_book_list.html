@@ -9,39 +9,9 @@
 </head>
 <body>
 <h1>My Book List</h1>
-
-<!--<form method="get" th:action="@{/mypage/mybooks}" th:object="${orderListDTO}">-->
-<!--    <label for="keyword">검색어</label>-->
-<!--    <input type="text" th:field="${keyword}" id="keyword" required />-->
-<!--    <button type="submit">검색</button>-->
-<!--</form>-->
-
-    <div th:each="book : ${orderListDTOs}">
-        <div th:text="${orderListDTO.getMemberId()}"></div>
-        <div th:text="${orderListDTO.getBookId()}"></div>
-<!--        <div><img th:src="@{${book.getBookId()}"/>이미지</div>-->
-<!--        <div th:text="${book.}">제목</div>-->
-<!--        <div th:text="${book.writer}">작가</div>-->
-    </div>
-
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/basic.html}">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
 <div layout:fragment="content">
     <div class="row mt-3">
-        <form action="/silbaram/board/list_qna" method="get">
+        <form action="/mypage/mybooks" method="get">
             <div class="col">
                 <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
 
@@ -69,25 +39,23 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">서재</h5>
-                    <table class="table">
-                        <thead>
-                        <th>
-                            <th scope="col">oid</th>
-                            <th scope="col">name</th>
-                            <th scope="col">writer</th>
-                        </th>
-                        </thead>
-
-                        <tbody th:with="link = ${pageRequestDTO.getLink()}">
-                        <tr th:each="dto:${responseDTO.dtoList}">
-                            <th scope="col">[[${dto.oid}]]</th>
-                            <td><a th:href="|@{/mybooks(oid =${dto.bdid})}&${link}|"> [[${dto.name}]]</a></td>
-                            <td>[[${dto.writer}]]</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div th:with="link = ${pageRequestDTO.getLink()}">
+                        <div th:each="dto : ${responseDTO.dtoList}">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p th:text="${dto.oid}"></p>
+                                </div>
+                                <div class="col-sm">
+                                    <p th:text="${dto.bookName}"></p>
+                                </div>
+                                <div class="col-sm">
+                                    <p th:text="${dto.writerName}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!--페이지 버튼-->
-                    <div class="float-end" >
+                    <div class="float-end">
                         <ul class="pagination flex-wrap">
                             <div th:if="${responseDTO.total > 0}">
                                 <li class="page-item" th:if="${responseDTO.prev}">
@@ -113,44 +81,25 @@
     </div>
 </div>
 
-<!--modal-->
-<!--	<div class="modal" tabindex="-1">-->
-<!--		<div class="modal-dialog">-->
-<!--			<div class="modal-content">-->
-<!--				<div class="modal-header">-->
-<!--					<h5 class="modal-title">Modal title</h5>-->
-<!--					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--				</div>-->
-<!--				<div class="modal-body">-->
-<!--					<p>완료</p>-->
-<!--				</div>-->
-<!--				<div class="modal-footer">-->
-<!--					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--					<button type="button" class="btn btn-primary">Save changes</button>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
-
 
 </div>
 <script layout:fragment="script" th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URL(location.href).searchParams;
         const el = document.getElementById('searchType');
         const len = el.options.length;
 
         // 문의 목록 페이지가 검색 목록을 보여주는 페이지라면 (검색결과 화면이라면)
-        if(urlParams.get('types') !== null){
+        if (urlParams.get('types') !== null) {
             const str = urlParams.get('types');
             console.log(str)
-            for (let i=0; i<len; i++){
+            for (let i = 0; i < len; i++) {
                 //select box의 option value가 입력 받은 value의 값과 일치할 경우 selected
-                if(el.options[i].value == str){
+                if (el.options[i].value == str) {
                     el.options[i].selected = true;
                 }
             }
-        }else{
+        } else {
             el.options[0].selected = true;
         }
     });
@@ -191,25 +140,9 @@
         e.preventDefault();
         e.stopPropagation();
 
-        self.location = '/silbaram/board/list_qna';
+        self.location = '/mypage/mybooks';
     }, false)
 
-    document.querySelector(".writeBtn").addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        self.location = '/silbaram/board/add_qna';
-    }, false)
-
-    //show modal
-    //redirectAttributes.addFlashAttribute("result", bno);의 result 변수를 이용해서 bno가 전달됨
-    //const result = [[${result}]];
-
-    //const modal = new bootstrap.Modal(document.querySelector(".modal"));
-
-    //if (result) {
-    //	modal.show();
-    //}
 </script>
 </body>
 </html>

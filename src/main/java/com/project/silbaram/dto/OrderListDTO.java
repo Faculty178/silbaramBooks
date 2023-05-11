@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class OrderListDTO {
+
     private Long oid;
     private Long bookId;
     private Long memberId;
@@ -21,4 +22,10 @@ public class OrderListDTO {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate orderDate;
     private String orderNum;
+
+
+    /* book */
+    private BookDTO book;
+    private String bookName;
+    private String writerName;
 }

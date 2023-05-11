@@ -1,6 +1,5 @@
 package com.project.silbaram.controller;
 
-import com.project.silbaram.dto.OrderListDTO;
 import com.project.silbaram.dto.PageRequestDTO;
 import com.project.silbaram.dto.PageResponseDTO;
 import com.project.silbaram.service.MyBookListService;
@@ -22,16 +21,16 @@ public class MyBookListController {
     private final MyBookListService myBookListService;
 
         @GetMapping("/mybooks")
-        public String MyBookListGET(Model model, HttpSession session, PageRequestDTO pageRequestDTO,OrderListDTO orderListDTO) {
+        public String MyBookListGET(Model model, HttpSession session, PageRequestDTO pageRequestDTO) {
 
             Long memberId = (Long) session.getAttribute("mid");
-            orderListDTO.setMemberId(memberId);
-            log.info(orderListDTO);
 
             PageResponseDTO responseDTO = myBookListService.getAllMyBooks(memberId, pageRequestDTO);
             log.info("responseDTO : " + responseDTO );
-            model.addAttribute("responseDTO: " + responseDTO);
-            model.addAttribute("pageRequestDTO: " + pageRequestDTO);
+            log.info("responseDTO.getDtoList() {} " + responseDTO.getDtoList());
+
+            model.addAttribute("responseDTO", responseDTO);
+            model.addAttribute("pageRequestDTO", pageRequestDTO);
 
             return "silbaram/member/my_book_list";
         }
