@@ -20,12 +20,39 @@
 
 <!--  검색  -->
     <select id="getOrderByMemberAndKeyword" resultType="com.project.silbaram.vo.OrderListVO">
-        SELECT o.*, b.title
+        SELECT o.*, b.name
         FROM orderlist o
                  JOIN book b ON o.bookId = b.bkid
         WHERE o.memberId = #{memberId}
-          AND b.title LIKE CONCAT('%', #{keyword}, '%')
+          AND b.name LIKE CONCAT('%', #{keyword}, '%')
         ORDER BY o.orderDate DESC
+    </select>
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                and
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 'n'.toString()">
+                        `name` like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        `writer` like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'nw'.toString()">
+                        `name` like concat('%', #{keyword}, '%')
+                        or
+                        `writer` like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="getCount" resultType="int">
+        select count(oid)
+        from `orderlist`
+        <include refid="search"></include>
     </select>
 
 

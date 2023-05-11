@@ -48,6 +48,7 @@ public class BoardController {
         log.info("responseDTO {}", responseDTO);
         model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("pageRequestDTO", pageRequestDTO);
+
     }
 
 

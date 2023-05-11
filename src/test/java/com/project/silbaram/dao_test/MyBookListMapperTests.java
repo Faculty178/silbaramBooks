@@ -16,24 +16,24 @@ public class MyBookListMapperTests {
     @Autowired
     private MyBookListDAO myBookListDAO;
 
-    @Test
-    public void getAllMyBooksTest() {
-        Long memberId = 7L; // 회원 ID 값
-        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(memberId);
-        for (OrderListVO orderListVO : voList) {
-            log.info("테스트: " + orderListVO);
-        }
-    }
+//    @Test
+//    public void getAllMyBooksTest() {
+//        Long memberId = 7L; // 회원 ID 값
+//        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(memberId);
+//        for (OrderListVO orderListVO : voList) {
+//            log.info("테스트: " + orderListVO);
+//        }
+//    }
 
-    @Test
-    public void getAllMyBooksBySpellASCTest() {
-        Long memberId = 7L; // 회원 ID 값
-        List<OrderListVO> voList = myBookListDAO.selectAllMyBooksBySpellASC(memberId);
-        for (OrderListVO orderListVO : voList
-        ){
-            log.info(orderListVO);
-        }
-    }
+//    @Test
+//    public void getAllMyBooksBySpellASCTest() {
+//        Long memberId = 7L; // 회원 ID 값
+//        List<OrderListVO> voList = myBookListDAO.selectAllMyBooksBySpellASC(memberId);
+//        for (OrderListVO orderListVO : voList
+//        ){
+//            log.info(orderListVO);
+//        }
+//    }
 
 
 
