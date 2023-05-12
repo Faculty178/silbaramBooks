@@ -15,6 +15,8 @@
             <div class="col">
                 <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
 
+
+
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <select id="searchType" class="form-select" name="types">
@@ -122,20 +124,19 @@
 
     }, false)
 
-    // 검색
-    /*
-        document.querySelector(".searchBtn").addEventListener("click", function (e) {
-            var searchType = '';
-            var keyword = '';
+    // // 검색
+    //     document.querySelector(".searchBtn").addEventListener("click", function (e) {
+    //         let searchType = '';
+    //         let keyword = '';
+    //
+    //         document.getElementById('searchType')
+    //
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //
+    //         self.location = '/mypage/mybooks';
+    //     }, false)
 
-            document.getElementById('searchType')
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            //self.location = '/silbaram/board/list_qna';
-        }, false)
-    */
     document.querySelector(".clearBtn").addEventListener("click", function (e) {
         e.preventDefault();
         e.stopPropagation();

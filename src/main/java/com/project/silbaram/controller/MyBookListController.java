@@ -25,7 +25,7 @@ public class MyBookListController {
 
             Long memberId = (Long) session.getAttribute("mid");
 
-            PageResponseDTO responseDTO = myBookListService.getAllMyBooks(memberId, pageRequestDTO);
+            PageResponseDTO responseDTO = myBookListService.getAllMyBooks(pageRequestDTO, memberId);
             log.info("responseDTO : " + responseDTO );
             log.info("responseDTO.getDtoList() {} " + responseDTO.getDtoList());
 
@@ -34,7 +34,6 @@ public class MyBookListController {
 
             return "silbaram/member/my_book_list";
         }
-
 
 
 

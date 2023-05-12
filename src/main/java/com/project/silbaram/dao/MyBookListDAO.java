@@ -4,6 +4,7 @@ package com.project.silbaram.dao;
 import com.project.silbaram.dto.PageRequestDTO;
 import com.project.silbaram.vo.OrderListVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ public interface MyBookListDAO {
     void insertOrder(OrderListVO orderListVO);
 
     // 전체조회
-    List<OrderListVO> selectAllMyBooks(Long memberId, PageRequestDTO PageRequestDTO);
+    List<OrderListVO> selectAllMyBooks(PageRequestDTO PageRequestDTO, Long memberId);
 
     int getCount(PageRequestDTO pageRequestDTO);
 
 //    List<OrderListVO> selectAllMyBooksBySpellASC(Long memberId);
-//
-//    List<OrderListVO> selectOrderByMemberAndKeyword(long memberId, String keyword);
+
+    List<OrderListVO> selectOrderByMemberAndKeyword(PageRequestDTO pageRequestDTO, Long memberId);
 
 
 }

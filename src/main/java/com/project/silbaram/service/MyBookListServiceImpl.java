@@ -31,8 +31,8 @@ public class MyBookListServiceImpl implements MyBookListService {
 
 
     @Override
-    public PageResponseDTO<OrderListDTO> getAllMyBooks(Long memberId,PageRequestDTO pageRequestDTO) {
-        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(memberId, pageRequestDTO);
+    public PageResponseDTO<OrderListDTO> getAllMyBooks(PageRequestDTO pageRequestDTO, Long memberId) {
+        List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(pageRequestDTO, memberId);
         log.info(voList);
         List<OrderListDTO> dtoList = new ArrayList<>();
         for (OrderListVO orderListVO: voList
@@ -51,6 +51,7 @@ public class MyBookListServiceImpl implements MyBookListService {
                 .build();
         return pageResponseDTO;
     }
+
 //
 //    @Override
 //    public List<OrderListDTO> getAllMyBooksBySpellASC(Long memberId) {

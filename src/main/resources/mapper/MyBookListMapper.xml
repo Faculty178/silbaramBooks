@@ -13,56 +13,80 @@
     <select id="selectAllMyBooks" resultType="com.project.silbaram.vo.OrderListVO">
         SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
         FROM `orderlist` o
-                 JOIN `book` b ON o.bookId = b.bkid
-        WHERE o.`memberId` = #{memberId}
-        ORDER BY `orderDate` DESC;
+        JOIN `book` b ON o.bookId = b.bkid
+        <include refid="search"></include>
+        AND o.`memberId` = #{memberId}
+        ORDER BY `orderDate` DESC LIMIT #{param1.skip}, #{param1.size}
     </select>
 
-<!--  가나다순 조회  -->
+    <!--  가나다순 조회  -->
     <select id="selectAllMyBooksBySpellASC" resultType="com.project.silbaram.vo.OrderListVO">
         SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
         FROM `orderlist` o
-                 JOIN `book` b ON o.bookId = b.bkid
-        WHERE o.`memberId` = #{memberId}
-        ORDER BY b.`name` ASC;
+        JOIN `book` b ON o.bookId = b.bkid
+        <include refid="search"></include>
+        AND o.`memberId` = #{memberId}
+        ORDER BY b.`name` ASC LIMIT #{param1.skip}, #{param1.size}
     </select>
 
-<!--  검색  -->
-    <select id="getOrderByMemberAndKeyword" resultType="com.project.silbaram.vo.OrderListVO">
-        SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
-        FROM orderlist o
-                 JOIN book b ON o.bookId = b.bkid
-        WHERE o.memberId = #{memberId}
-          AND b.name LIKE CONCAT('%', #{keyword}, '%')
-        ORDER BY o.orderDate DESC
+<!--    &lt;!&ndash;  가나다순 조회  &ndash;&gt;-->
+<!--    <select id="selectAllMyBooksBySpellASC" resultType="com.project.silbaram.vo.OrderListVO">-->
+<!--        SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName-->
+<!--        FROM `orderlist` o-->
+<!--        JOIN `book` b ON o.bookId = b.bkid-->
+<!--        <include refid="search"></include>-->
+<!--        AND o.`memberId` = #{memberId}-->
+<!--        ORDER BY b.`name` ASC LIMIT #{param1.skip}, #{param1.size}-->
+<!--    </select>-->
+
+    <select id="getCount" resultType="int">
+        select count(o.oid)
+        from `orderlist` o
+        join `book` b on o.bookId = b.bkid
+        <include refid="searchone"></include>
     </select>
 
-    <sql id="search">
+
+    <sql id="searchone">
         <where>
             <if test="types != null and types.length > 0">
                 and
                 <foreach collection="types" item="type" open="(" close=")" separator=" OR">
                     <if test="type == 'n'.toString()">
-                        book.name like concat('%', #{keyword}, '%')
+                        b.name like concat('%', #{keyword}, '%')
                     </if>
                     <if test="type == 'w'.toString()">
-                        book.writer like concat('%', #{keyword}, '%')
+                        b.writer like concat('%', #{keyword}, '%')
                     </if>
                     <if test="type == 'nw'.toString()">
-                        book.name like concat('%', #{keyword}, '%')
+                        b.name like concat('%', #{keyword}, '%')
                         OR
-                        book.writer like concat('%', #{keyword}, '%')
+                        b.writer like concat('%', #{keyword}, '%')
                     </if>
                 </foreach>
             </if>
         </where>
     </sql>
 
-    <select id="getCount" resultType="int">
-        select count(orderlist.oid)
-        from `orderlist`
-        join `book` on orderlist.bookId = book.bkid
-        <include refid="search"></include>
-    </select>
+    <sql id="search">
+        <where>
+            <if test="param1.types != null and param1.types.length > 0">
+                and
+                <foreach collection="param1.types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 'n'.toString()">
+                        b.name like concat('%', #{param1.keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        b.writer like concat('%', #{param1.keyword}, '%')
+                    </if>
+                    <if test="type == 'nw'.toString()">
+                        b.name like concat('%', #{param1.keyword}, '%')
+                        OR
+                        b.writer like concat('%', #{param1.keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
 
 </mapper>

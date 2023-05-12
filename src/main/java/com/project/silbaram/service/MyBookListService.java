@@ -10,9 +10,8 @@ import java.util.List;
 @Service
 public interface MyBookListService {
 
-    PageResponseDTO<OrderListDTO> getAllMyBooks(Long memberId,PageRequestDTO pageRequestDTO);
-//    List<OrderListDTO> getAllMyBooksBySpellASC(Long memberId);
-//
-//    List<OrderListDTO> getOrderByMemberAndKeyword(long memberId, String keyword);
+    PageResponseDTO<OrderListDTO> getAllMyBooks(PageRequestDTO pageRequestDTO, Long memberId);
+
+
 
 }
