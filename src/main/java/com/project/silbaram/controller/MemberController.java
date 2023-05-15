@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/silbaram")
+@RequestMapping("/")
 public class MemberController {
     private final MemberServiceImpl memberService;
 
@@ -43,11 +43,11 @@ public class MemberController {
             log.info("has error...");
             log.info(bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/silbaram/signup";
+            return "redirect:/signup";
         }
         log.info(memberDTO);
         memberService.addMember(memberDTO);
-        return "redirect:/silbaram/index";
+        return "redirect:/index";
     }
 
     @PostMapping("/idCheck")
@@ -63,8 +63,6 @@ public class MemberController {
         return memberService.isDuplicatedUserNickName(nickName);
     }
 
-
-
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("memberDTO", new MemberDTO());
@@ -79,11 +77,11 @@ public class MemberController {
         if(mid == null) {
             log.info("login fails!");
             model.addAttribute("msg","아이디와 비밀번호를 확인해주세요");
-            return "redirect:/silbaram/login";
+            return "redirect:/login";
         }
         session.setAttribute("mid", mid);
         log.info("login success!");
-        return "redirect:/silbaram/index";
+        return "redirect:/index";
     }
 
 
@@ -94,13 +92,13 @@ public class MemberController {
         if(session != null) {
             session.invalidate();
         }
-        return "redirect:/silbaram/index";
+        return "redirect:/index";
     }
 
     @GetMapping("/mypage")
     public String mypage(HttpSession session) {
         if(session.getAttribute("mid") == null) { // 로그인하지 않은 사용자는 로그인 페이지로 이동
-            return "redirect:/silbaram/login";
+            return "redirect:/login";
         }
         // 로그인한 사용자는 마이페이지로 이동
         return "silbaram/member/mypage";
@@ -110,7 +108,7 @@ public class MemberController {
     public String memberModifyGET(Model model, HttpSession session) {
         Long mid = (Long) session.getAttribute("mid");
         if (mid == null) { // 로그인하지 않은 사용자는 로그인 페이지로 이동
-            return "redirect:/silbaram/login";
+            return "redirect:/login";
         }
         // 로그인한 사용자는 마이페이지로 이동
         MemberDTO memberDTO = memberService.getMemberByMid(mid); // 회원정보를 조회함
@@ -123,12 +121,12 @@ public class MemberController {
     public String memberModifyPOST(@Valid MemberModifyDTO memberModifyDTO, MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
         if (bindingResult.hasErrors()) {
             log.info(bindingResult.getAllErrors());
-            return "redirect:/silbaram/mypage/membermodify";
+            return "redirect:/mypage/membermodify";
         }
 
         memberService.modifyMember(memberModifyDTO);
         session.setAttribute("mid", memberDTO.getMid());
-        return "redirect:/silbaram/mypage/membermodify";
+        return "redirect:/mypage/membermodify";
     }
 
 
