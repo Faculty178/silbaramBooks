@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>책추가</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form th:action="@{/silbaram/admin/addbook}" method="post">
+    <p>name: <input type="text" id="name" name="name" required /></p>
+    <p>writer: <input type="text" name="writer" required /></p>
+    <p>publisher: <input type="text" name="publisher" required /></p>
+    <p>price: <input type="text" name="price" required /></p>
+    <p>synopsis: <input type="text" name="synopsis" required /></p>
+    <p>pages: <input type="text" name="pages" required></p>
+    <p>isbn: <input type="text" name="isbnNum" required /></p>
+    <p>category: <input type="text" name="category" required /></p>
+    <p>fileSize: <input type="text" name="fileSize" /></p>
+    <p>language: <input type="text" name="language" /></p>
+    <p>voiceLength: <input type="text" name="voiceLength" /></p>
+    <p>bookUrl: <input type="text" name="bookUrl" /></p>
+    <p><button type="submit">등록</button></p>
+</form>
+
+</body>
+</html>

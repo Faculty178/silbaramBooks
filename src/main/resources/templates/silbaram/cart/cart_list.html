@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        form {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            background-color: pink;
+        }
+
+        form .cart_list {
+            float: left;
+            width: 60%;
+            height: 100%;
+            background-color: #fff;
+            overflow: auto;
+        }
+
+        form .cart_list .cart_item {
+            height: 150px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+
+        .cart_item .check_box {
+            float: left;
+            width: 15%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart_item .book_info {
+            float: left;
+            width: 85%;
+            height: 100%;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+<form action="/cart/order" method="post">
+    <input type="hidden" name="lkid">
+    <div class="cart_list">
+        <div class="button_area">
+            <input type="button" value="삭제">
+        </div>
+        <div class="cart_item" th:each="dto: ${dtoList}">
+            <div class="check_box"><input type="checkbox" name="select_book"></div>
+            <div class="book_info">
+                <p class="book_title">책 제목: [[${dto.name}]]</p>
+                <p class="writer">작가: [[${dto.writer}]]</p>
+                <p class="price">[[${dto.price}]]</p>
+                <button class="delete-product" th:value="${dto.lkid}">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="order_area">
+        <div class="total_price">총 결제금액 : `${totalPrice}`</div>
+        <input type="submit" value="구매하기">
+    </div>
+
+</form>
+<script>
+    /* 화면에 표시된 책 총 가격 계산 스크립트 */
+    const cart_item = document.querySelectorAll('.price');
+    const totalPriceFiled = document.querySelector('.total_price');
+    let totalPrice = 0;
+
+    function sum() {
+        for (let item of cart_item) {
+            totalPrice += parseFloat(item.textContent);
+        }
+        totalPriceFiled.innerHTML = totalPrice;
+    }
+
+    sum();
+    /* // 화면에 표시된 책 총 가격 계산 스크립트 */
+
+    const frmView = document.querySelector("form");
+
+
+    document.querySelector(".delete-product").addEventListener("click", function (e) {
+        const target = e.target;
+        console.log(target.getAttribute("value"));
+            frmView.lkid.value = target.getAttribute("value");
+            frmView.action = `/silbaram/cart/deleteCart`;
+            frmView.method = "post";
+            frmView.submit();
+    })
+</script>
+</body>
+</html>
