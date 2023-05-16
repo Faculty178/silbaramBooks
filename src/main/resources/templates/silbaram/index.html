@@ -16,7 +16,7 @@
         <a href="/login">로그인</a>
     </li>
     <li th:if="${session.mid}">
-        <a href="/member/mypage">마이페이지</a>
+        <a href="/mypage">마이페이지</a>
     </li>
     <li th:if="${session.mid}">
         <form action="/logout" method="post">
