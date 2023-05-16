@@ -19,6 +19,8 @@ public interface MemberService {
 
     void modifyMember(MemberModifyDTO memberDTO);
 
+    void modifyMemberPw(MemberModifyDTO memberDTO);
+
 //    void updateUuid(String mid, String uuid);
 //
 //    MemberDTO getByUuid(String uuid);
