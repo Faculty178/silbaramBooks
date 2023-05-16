@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.silbaram.dao.BookDAO">
+
+<!-- seonghoon   -->
+    <insert id="insertBook">
+        INSERT INTO `book` (`name`, `writer`, `publisher`, `price`, `synopsis`, `pages`, `isbnNum`,
+                            `category`, `fileSize`, `language`, `voiceLength`, `bookUrl`)
+        VALUES (#{name}, #{writer}, #{publisher}, #{price}, #{synopsis}, #{pages}, #{isbnNum},
+                #{category}, #{fileSize}, #{language}, #{voiceLength}, #{bookUrl})
+    </insert>
+
+    <select id="getBookList" resultType="com.project.silbaram.vo.BookVO">
+        SELECT * FROM `book`
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="com.project.silbaram.vo.BookVO">
+        select * from `book` where bkid = #{bkid}
+    </select>
+
+    <update id="updateBook" parameterType="com.project.silbaram.vo.BookVO">
+        UPDATE `book` SET `name`=#{name}, `writer`=#{writer}, `publisher`=#{publisher},
+                          `price`=#{price}, `synopsis`=#{synopsis}, `pages`=#{pages},
+                          `isbnNum`=#{isbnNum}, `category`=#{category},
+                          `fileSize`=#{fileSize}, `language`=#{language},
+                          `voiceLength`=#{voiceLength}, `bookUrl`=#{bookUrl}
+        WHERE `bkid`=#{bkid}
+    </update>
+
+    <delete id="deleteBookById" parameterType="long">
+        DELETE FROM book WHERE bkid = #{bkid}
+    </delete>
+
+    <select id="getBookById" resultType="com.project.silbaram.vo.BookVO">
+        SELECT *
+        FROM book
+        WHERE bkid = #{bkid}
+    </select>
+
+<!--  chae  -->
+    <select id="selectAll" resultType="com.project.silbaram.vo.BookVO">
+        SELECT * FROM `book` order by `bkid` desc
+    </select>
+
+    <select id="selectOne" resultType="com.project.silbaram.vo.BookVO">
+        SELECT * FROM `book` WHERE `bkid` = #{bkid}
+    </select>
+
+
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR">
+                    <if test="type == 'n'.toString()">
+                        name like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'p'.toString()">
+                        publisher like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="list" resultType="com.project.silbaram.vo.BookVO">
+        select * from `book`
+        <include refid="search"></include>
+        order by bkid desc limit #{skip}, #{size}
+    </select>
+    <!--mybatis는 getXXX, setXXX을 통해서 동작하기때문에 skip은 getSkip()을 호출-->
+
+    <select id="getCount" resultType="int">
+        select count(bkid)
+        from `book`
+        <include refid="search"></include>
+    </select>
+
+
+
+</mapper>
