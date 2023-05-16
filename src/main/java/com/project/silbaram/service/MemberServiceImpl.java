@@ -60,6 +60,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public void modifyMemberPw(MemberModifyDTO memberDTO) {
+        log.info(modelMapper);
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        memberDAO.updateMember(memberVO);
+        log.info(memberVO);
+    }
+
+    @Override
     public Long login(String userId, String password) {
         MemberVO memberVO = memberDAO.selectMemberById(userId);
         if (memberVO == null) {

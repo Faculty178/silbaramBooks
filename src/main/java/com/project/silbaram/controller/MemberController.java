@@ -29,40 +29,6 @@ public class MemberController {
         return "silbaram/index";
     }
 
-    @GetMapping("/signup")
-    public String  addMemberGET(Model model) {
-
-        log.info("addMemberGET...");
-        model.addAttribute("memberDTO", new MemberDTO());
-        return "silbaram/signup/signup";
-    }
-    @PostMapping("/signup")
-    public String addMemberPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        log.info("addMemberPOST...");
-        if (bindingResult.hasErrors()) {
-            log.info("has error...");
-            log.info(bindingResult.getAllErrors());
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/signup";
-        }
-        log.info(memberDTO);
-        memberService.addMember(memberDTO);
-        return "redirect:/index";
-    }
-
-    @PostMapping("/idCheck")
-    @ResponseBody
-    public boolean idCheck(@RequestBody String userId) {
-        log.info("idCheck() : "+memberService.isDuplicatedUserId(userId));
-        return memberService.isDuplicatedUserId(userId);
-    }
-    @PostMapping("/nickNameCheck")
-    @ResponseBody
-    public boolean nickNameCheck(@RequestBody String nickName) {
-        log.info("nickNameCheck() : "+memberService.isDuplicatedUserNickName(nickName));
-        return memberService.isDuplicatedUserNickName(nickName);
-    }
-
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("memberDTO", new MemberDTO());
@@ -103,45 +69,6 @@ public class MemberController {
         // 로그인한 사용자는 마이페이지로 이동
         return "silbaram/member/mypage";
     }
-
-    @GetMapping("/mypage/membermodify")
-    public String memberModifyGET(Model model, HttpSession session) {
-        Long mid = (Long) session.getAttribute("mid");
-        if (mid == null) { // 로그인하지 않은 사용자는 로그인 페이지로 이동
-            return "redirect:/login";
-        }
-        // 로그인한 사용자는 마이페이지로 이동
-        MemberDTO memberDTO = memberService.getMemberByMid(mid); // 회원정보를 조회함
-        log.info(memberDTO);
-        model.addAttribute("memberDTO", memberDTO);
-        return "silbaram/member/member_modify";
-    }
-
-    @PostMapping("/mypage/membermodify")
-    public String memberModifyPOST(@Valid MemberModifyDTO memberModifyDTO, MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            log.info(bindingResult.getAllErrors());
-            return "redirect:/mypage/membermodify";
-        }
-
-        memberService.modifyMember(memberModifyDTO);
-        session.setAttribute("mid", memberDTO.getMid());
-        return "redirect:/mypage/membermodify";
-    }
-
-
-    @Autowired
-    private MailSendService mailSendService;
-    //이메일 인증
-    @GetMapping("/mailCheck")
-    @ResponseBody
-    public String mailCheck(String email) {
-        System.out.println("이메일 인증 요청이 들어옴!");
-        System.out.println("이메일 인증 이메일 : " + email);
-        return mailSendService.joinEmail(email);
-    }
-
-
 
 
 }

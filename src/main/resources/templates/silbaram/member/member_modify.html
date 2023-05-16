@@ -23,9 +23,12 @@
     <li th:if="${session.mid}">
         <a href="/mypage/mybooks">서재</a>
     </li>
+    <li th:if="${session.mid}">
+        <a href="/mypage/resetpw">비밀번호 변경</a>
+    </li>
 </ul>
 
-<form th:action="@{/silbaram/mypage/membermodify}"  th:object="${memberDTO}"  method="post" name="frmMemberInsert">
+<form th:action="@{/mypage/membermodify}"  th:object="${memberDTO}"  method="post" name="frmMemberInsert">
     <input type="hidden" name="email">
 
 
@@ -72,7 +75,7 @@
         <input name="address2" id="address2" type="text" th:field="*{address2}" >
     </div>
     <div>
-        <button type="submit" onclick="checkModify()">회원정보 수정</button>
+        <button type="submit" class="btn-submit" onclick="checkModify()">회원정보 수정</button>
     </div>
 </form>
 <script src="/js/signup.js"></script>
@@ -80,7 +83,7 @@
 <script type="text/javascript">
     function checkModify() {
         $.ajax({
-            url: "/silbaram/mypage/membermodify",
+            url: "/mypage/membermodify",
             type: "POST",
             data: $("form[name=frmMemberInsert]").serialize(),
             success: function (data) {
