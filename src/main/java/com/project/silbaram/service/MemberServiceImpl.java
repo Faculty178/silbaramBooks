@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService{
     public void modifyMemberPw(MemberModifyDTO memberDTO) {
         log.info(modelMapper);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
-        memberDAO.updateMember(memberVO);
+        memberDAO.updatePassword(memberVO);
         log.info(memberVO);
     }
 

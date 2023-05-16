@@ -77,11 +77,13 @@ public class MemberModifyController {
 
 
     @PostMapping("/mypage/checkpw")
-    public String checkPwPOST(Model model, MemberDTO memberDTO, HttpSession session) {
+    public String checkPwPOST(Model model, HttpSession session) {
 
-        memberService.getMemberByMid(memberDTO.getMid());
-        session.setAttribute("mid", memberDTO.getMid());
-        String oldPassword = (String) model.getAttribute("oldPassword");
+        Long mid = (Long) session.getAttribute("mid");
+        MemberDTO memberDTO = memberService.getMemberByMid(mid); // 회원정보를 조회함
+        log.info(memberDTO);
+        model.addAttribute("memberDTO", memberDTO);
+        model.getAttribute("oldPassword");
 
         return "redirect:/mypage/resetpw";
     }
