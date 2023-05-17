@@ -27,38 +27,28 @@
     </li>
 </ul>
 
-<form th:action="@{/mypage/resetpw}"  th:object="${memberDTO}" method="post" name="frmResetPw"
-      onclick='return submit2(this.form);'>
+<form th:action="@{/mypage/resetpw}"  th:object="${memberDTO}" method="post" name="frmResetPw">
 
     <div>
         <div>
-            <label for="password">기존 비밀번호:</label>
+            <label for="oldPassword">기존 비밀번호:</label>
             <input type="password" id="oldPassword" name="oldPassword" maxlength="20" required/>
         </div>
         <div>
             <label for="password">새비밀번호:</label>
             <input type="password" id="password" name="password" onchange="pwCheck()" maxlength="20 "required/>
             <span id="pwValid"></span><br>
-            <label for="password">비밀번호 재확인:</label>
+            <label for="password2">비밀번호 재확인:</label>
             <input type="password" id="password2" name="password2" onchange="pwCheck()" maxlength="20" required/>
             <span id="pwSame"></span><br>
         </div>
-
         <div>
-            <button type="submit" class="btn-submit" onclick="checkModify()">회원정보 수정</button>
+            <button type="submit" class="btn-submit" onclick="checkModify()">비밀번호 변경</button>
         </div>
     </div>
 
 </form >
 <script src="/js/signup.js"></script>
-
-<script>
-    function submit2(frm) {
-        frm.action='/mypage/checkpw';
-        frm.submit();
-        return true;
-    }
-</script>
 <script type="text/javascript">
 
     function checkModify() {
