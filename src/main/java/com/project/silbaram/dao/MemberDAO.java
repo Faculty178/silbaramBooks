@@ -16,6 +16,8 @@ public interface MemberDAO {
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
 
+//    String selectPasswordByMId(Long mid);
+
     // 중복아이디 체크
     int countMemberByUserId(String userId);
     // 중복닉네임 체크
