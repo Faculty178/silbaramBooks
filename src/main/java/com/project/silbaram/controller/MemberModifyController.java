@@ -92,12 +92,7 @@ public class MemberModifyController {
                 // 비밀번호 일치 및 유효성 검사 통과한 경우 비밀번호 변경 처리
                 memberPassWordModifyDTO.setMid(mid);
                 session.setAttribute("mid", memberDTO.getMid());
-                log.info("pwdto: "+memberPassWordModifyDTO);
-                log.info("dto: "+memberDTO);
                 memberService.modifyMemberPw(memberPassWordModifyDTO);
-                session.setAttribute("mid", memberDTO.getMid());
-                log.info("pwdto2: "+memberPassWordModifyDTO);
-                log.info("dto2: "+memberDTO);
                 return "redirect:/mypage/resetpw";
             }
         }
