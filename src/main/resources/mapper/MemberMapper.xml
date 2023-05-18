@@ -31,6 +31,14 @@
         WHERE `userId` = #{userId}
     </select>
 
+    <!-- 자동로그인 -->
+    <select id="selectMemberByUuid" resultType="com.project.silbaram.vo.MemberVO">
+        SELECT * FROM `member` WHERE `uuid` = #{uuid}
+    </select>
+    <update id="updateUuid">
+        UPDATE `member` SET `uuid` = #{uuid} WHERE `mid` = #{mid}
+    </update>
+
     <!-- 회원정보 불러오기 -->
     <select id="selectMemberByMid" resultType="com.project.silbaram.vo.MemberVO">
         SELECT *

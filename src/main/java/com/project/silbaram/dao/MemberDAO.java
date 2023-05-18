@@ -13,6 +13,9 @@ public interface MemberDAO {
     // 로그인
     MemberVO selectMemberById(String userId);
 
+    // 자동로그인
+    MemberVO selectMemberByUuid(String uuid);
+    void updateUuid(Long mid, String uuid);
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
 
