@@ -23,7 +23,7 @@ public interface MemberService {
 
     MemberDTO getMemberByMid(Long mid);
 
-//    String getPasswordByMid(Long mid);
+    boolean modifyMemberPwByEmailAndUserId (String password, String email, String userId);
 
     void modifyMember(MemberModifyDTO memberDTO);
 //

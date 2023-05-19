@@ -1,9 +1,6 @@
 package com.project.silbaram.dao;
-import com.project.silbaram.dto.MemberDTO;
 import com.project.silbaram.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface MemberDAO {
@@ -19,9 +16,12 @@ public interface MemberDAO {
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
 
+    // 아이디 찾기
     MemberVO selectUserIdByEmail(String email);
 
-//    String selectPasswordByMId(Long mid);
+    // 비밀번호 재발급
+    int updatePasswordByEmailAndUserId (String password, String email, String userId);
+
 
     // 중복아이디 체크
     int countMemberByUserId(String userId);
