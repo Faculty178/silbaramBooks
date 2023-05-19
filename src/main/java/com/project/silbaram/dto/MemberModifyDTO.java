@@ -17,9 +17,8 @@ public class MemberModifyDTO {
     private Long mid;
     @NotEmpty
     private String phoneNumber;
-    @NotEmpty
-    private String email;
     private String zipcode;
-    private String address;
+    private String address1;
+    private String address2;
 
 }

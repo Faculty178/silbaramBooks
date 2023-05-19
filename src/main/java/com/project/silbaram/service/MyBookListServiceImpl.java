@@ -24,12 +24,6 @@ public class MyBookListServiceImpl implements MyBookListService {
     private final MyBookListDAO myBookListDAO;
     private final ModelMapper modelMapper;
 
-//    @Override
-//    public PageResponseDTO<OrderListDTO> getAllMyBooks(PageRequestDTO pageRequestDTO) {
-//        return null;
-//    }
-
-
     @Override
     public PageResponseDTO<OrderListDTO> getAllMyBooks(PageRequestDTO pageRequestDTO, Long memberId) {
         List<OrderListVO> voList = myBookListDAO.selectAllMyBooks(pageRequestDTO, memberId);
@@ -52,21 +46,5 @@ public class MyBookListServiceImpl implements MyBookListService {
         return pageResponseDTO;
     }
 
-//
-//    @Override
-//    public List<OrderListDTO> getAllMyBooksBySpellASC(Long memberId) {
-//        List<OrderListVO> orderListVOList = myBookListDAO.selectAllMyBooksBySpellASC(memberId);
-//        return orderListVOList.stream()
-//                .map(orderListVO -> modelMapper.map(orderListVO, OrderListDTO.class))
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    public List<OrderListDTO> getOrderByMemberAndKeyword(long memberId, String keyword) {
-//        List<OrderListVO> orderListVOList = myBookListDAO.selectOrderByMemberAndKeyword(memberId, keyword);
-//        return orderListVOList.stream()
-//                .map(orderListVO -> modelMapper.map(orderListVO, OrderListDTO.class))
-//                .collect(Collectors.toList());
-//    }
 }
 
