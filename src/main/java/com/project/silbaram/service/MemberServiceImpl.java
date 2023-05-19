@@ -69,6 +69,13 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public MemberDTO getMemberByEmail(String email) {
+        MemberVO memberVO = memberDAO.selectUserIdByEmail(email);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+
+    @Override
     public Long login(String userId, String password) {
         MemberVO memberVO = memberDAO.selectMemberById(userId);
         if (memberVO == null) {
@@ -93,6 +100,8 @@ public class MemberServiceImpl implements MemberService{
         // 자동 로그인을 사용하는 경우 임의의 문자열을 저장
         memberDAO.updateUuid(mid,uuid);
     }
+
+
 
 
 }
