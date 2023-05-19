@@ -47,11 +47,19 @@
     </select>
 
 
+    <!-- 아이디 찾기 -->
     <select id="selectUserIdByEmail"  resultType="com.project.silbaram.vo.MemberVO">
         SELECT  `userId`
         FROM `member`
         WHERE `email` = #{email}
     </select>
+
+    <!-- 비밀번호 재발급 -->
+    <update id="updatePasswordByEmailAndUserId">
+        UPDATE `member`
+        SET `password` = #{password}
+        WHERE `email` = #{email} AND `userId` = #{userId};
+    </update>
 
     <!--  회원정보 수정  -->
         <update id="updateMember">
@@ -71,7 +79,6 @@
         UPDATE member
         SET password    = IFNULL(#{password}, password)
         WHERE mid = #{mid};
-
     </update>
 
 

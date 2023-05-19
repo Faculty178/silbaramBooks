@@ -23,19 +23,13 @@ public interface MemberService {
 
     MemberDTO getMemberByMid(Long mid);
 
-//    String getPasswordByMid(Long mid);
+    boolean modifyMemberPwByEmailAndUserId (String password, String email, String userId);
 
     void modifyMember(MemberModifyDTO memberDTO);
-//
+
     void modifyMemberPw(MemberPassWordModifyDTO memberDTO);
 
     MemberDTO getMemberByEmail(String email);
-
-
-
-//    void updateUuid(String mid, String uuid);
-//
-//    MemberDTO getByUuid(String uuid);
 
 
 }

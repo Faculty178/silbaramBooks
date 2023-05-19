@@ -53,6 +53,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public boolean modifyMemberPwByEmailAndUserId(String password, String email, String userId) {
+        int updates = memberDAO.updatePasswordByEmailAndUserId(password, email, userId);
+
+        return updates > 0;
+    }
+
+
+
+    @Override
     public void modifyMember(MemberModifyDTO memberDTO) {
         log.info(modelMapper.toString());
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);

@@ -57,11 +57,9 @@
             type: "POST",
             data: $("form[name=frmResetPw]").serialize(),
             success: function (data) {
-                // Display an alert box if the member information is successfully updated
                 alert("비밀번호가 성공적으로 변경되었습니다.");
             },
             error: function (data) {
-                // Display an alert box if there is an error during the update process
                 alert("비밀번호 변경에 실패하였습니다.");
             }
         });

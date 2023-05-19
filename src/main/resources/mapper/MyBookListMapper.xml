@@ -3,20 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.silbaram.dao.MyBookListDAO">
 
-    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="oid">
-        INSERT INTO `orderlist` (`bookId`, `memberId`, `totalPrice`, `orderNum`)
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="ogid">
+        INSERT INTO `orderinfo` (`bookId`, `memberId`, `totalPrice`, `orderNum`)
         VALUES
             (#{bookId}, #{memberId}, #{totalPrice}, #{orderNum});
     </insert>
 
     <select id="selectAllMyBooks" resultType="com.project.silbaram.vo.OrderListVO">
         SELECT o.*, b.`name` AS bookName, b.`writer` AS writerName
-        FROM `orderlist` o
+        FROM `orderinfo` o
         JOIN `book` b ON o.bookId = b.bkid
         <include refid="search"></include>
         AND o.`memberId` = #{memberId}
         <if test="param1.sortType == 'recent'">
-            ORDER BY `oid` DESC
+            ORDER BY `ogid` DESC
         </if>
         <if test="param1.sortType == 'spell'">
             ORDER BY b.`name` ASC
@@ -26,8 +26,8 @@
 
 
     <select id="getCount" resultType="int">
-        select count(o.oid)
-        from `orderlist` o
+        select count(o.ogid)
+        from `orderinfo` o
         join `book` b on o.bookId = b.bkid
         <include refid="searchone"></include>
     </select>
