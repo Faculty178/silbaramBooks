@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 public class OrderListDTO {
 
-    private Long oid;
+    private Long ogid;
     private Long bookId;
     private Long memberId;
 

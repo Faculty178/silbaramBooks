@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class OrderListVO {
 
-    private Long oid;
+    private Long ogid;
     private Long bookId;
     private Long memberId;
 
