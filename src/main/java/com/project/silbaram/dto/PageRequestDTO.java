@@ -32,6 +32,7 @@ public class PageRequestDTO {
     @Positive
     private int size = 10;
 
+    private String sortType = "recent";
     private String link;
     private String[] types;
     private String keyword;

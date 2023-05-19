@@ -19,6 +19,30 @@ public class MyBookListMapperTests {
     @Autowired
     private MyBookListDAO myBookListDAO;
 
+    @Test
+    public void insertDummy() {
+        int i;
+        Long l;
+        Long bookNum = 2001L;
+        for (i = 1; i < 300; i++) {
+            if (bookNum < 2010L) {
+                bookNum++;
+            }
+            else if (bookNum == 2010L) {
+                bookNum = 2001L;
+            }
+            OrderListVO orderListVO = OrderListVO.builder()
+                    .bookId(bookNum)
+                    .memberId(3L)
+                    .totalPrice(10000)
+                    .orderNum(String.valueOf(i))
+                    .build();
+
+            log.info(orderListVO);
+            myBookListDAO.insertOrder(orderListVO);
+        }
+    }
+
 
     @Test
     public void searchTest() {

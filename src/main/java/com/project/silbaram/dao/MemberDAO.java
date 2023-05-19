@@ -13,8 +13,13 @@ public interface MemberDAO {
     // 로그인
     MemberVO selectMemberById(String userId);
 
+    // 자동로그인
+    MemberVO selectMemberByUuid(String uuid);
+    void updateUuid(Long mid, String uuid);
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
+
+//    String selectPasswordByMId(Long mid);
 
     // 중복아이디 체크
     int countMemberByUserId(String userId);
@@ -23,6 +28,9 @@ public interface MemberDAO {
 
     // 회원 정보 수정
     void updateMember(MemberVO memberVO);
+
+    // 비밀번호 수정
+    void updatePassword (MemberVO memberVO);
 
 
 //    // 자동로그인
@@ -33,21 +41,6 @@ public interface MemberDAO {
 //    // 회원 삭제
 //    void deleteMember(int mid);
 //
-//    // 회원 한 명 정보 조회
-//    MemberVO selectOneMember(int mid);
-//
-//    // 모든 회원 정보 조회
-//    List<MemberVO> selectAllMembers();
-//
-//    // 회원 아이디 중복 체크
-//    void checkUserId(String userId);
-//
-//    // 회원 닉네임 중복 체크
-//    public void checkNickName(String nickName);
-//
-//    // 회원 아이디로 정보 조회
-//    public MemberVO selectOneMemberByUserId(String userId);
-
 
 
 }
