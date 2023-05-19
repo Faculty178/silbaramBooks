@@ -13,6 +13,10 @@ public interface MemberService {
 
     Long login(String userId, String password);
 
+    MemberDTO getByUuid(String uuid);
+
+    void updateUuid(Long mid, String uuid);
+
     boolean isDuplicatedUserId(String userId);
     boolean isDuplicatedUserNickName(String nickName);
 

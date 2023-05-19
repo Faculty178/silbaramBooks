@@ -80,4 +80,19 @@ public class MemberServiceImpl implements MemberService{
         }
         return null;
     }
+
+    @Override
+    public MemberDTO getByUuid(String uuid) {
+        MemberVO memberVO = memberDAO.selectMemberByUuid(uuid);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+
+    @Override
+    public void updateUuid(Long mid, String uuid) {
+        // 자동 로그인을 사용하는 경우 임의의 문자열을 저장
+        memberDAO.updateUuid(mid,uuid);
+    }
+
+
 }
