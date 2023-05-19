@@ -19,8 +19,6 @@ public interface MemberDAO {
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
 
-    MemberVO selectUserIdByEmail(String email);
-
 //    String selectPasswordByMId(Long mid);
 
     // 중복아이디 체크

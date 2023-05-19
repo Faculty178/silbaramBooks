@@ -4,7 +4,6 @@ package com.project.silbaram.service;
 import com.project.silbaram.dto.MemberDTO;
 import com.project.silbaram.dto.MemberModifyDTO;
 import com.project.silbaram.dto.MemberPassWordModifyDTO;
-import com.project.silbaram.vo.MemberVO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,8 +27,6 @@ public interface MemberService {
     void modifyMember(MemberModifyDTO memberDTO);
 //
     void modifyMemberPw(MemberPassWordModifyDTO memberDTO);
-
-    MemberDTO getMemberByEmail(String email);
 
 
 
