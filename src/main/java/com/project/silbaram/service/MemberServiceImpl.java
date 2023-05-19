@@ -4,6 +4,7 @@ package com.project.silbaram.service;
 import com.project.silbaram.dao.MemberDAO;
 import com.project.silbaram.dto.MemberDTO;
 import com.project.silbaram.dto.MemberModifyDTO;
+import com.project.silbaram.dto.MemberPassWordModifyDTO;
 import com.project.silbaram.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -52,19 +53,36 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public boolean modifyMemberPwByEmailAndUserId(String password, String email, String userId) {
+        int updates = memberDAO.updatePasswordByEmailAndUserId(password, email, userId);
+
+        return updates > 0;
+    }
+
+
+
+    @Override
     public void modifyMember(MemberModifyDTO memberDTO) {
-        log.info(modelMapper);
+        log.info(modelMapper.toString());
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         memberDAO.updateMember(memberVO);
         log.info(memberVO);
     }
 
+
     @Override
-    public void modifyMemberPw(MemberModifyDTO memberDTO) {
+    public void modifyMemberPw(MemberPassWordModifyDTO memberDTO) {
         log.info(modelMapper);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         memberDAO.updatePassword(memberVO);
         log.info(memberVO);
+    }
+
+    @Override
+    public MemberDTO getMemberByEmail(String email) {
+        MemberVO memberVO = memberDAO.selectUserIdByEmail(email);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
     }
 
     @Override
@@ -80,7 +98,18 @@ public class MemberServiceImpl implements MemberService{
         return null;
     }
 
+    @Override
+    public MemberDTO getByUuid(String uuid) {
+        MemberVO memberVO = memberDAO.selectMemberByUuid(uuid);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
 
+    @Override
+    public void updateUuid(Long mid, String uuid) {
+        // 자동 로그인을 사용하는 경우 임의의 문자열을 저장
+        memberDAO.updateUuid(mid,uuid);
+    }
 
 
 

@@ -26,6 +26,9 @@ public class MyBookListController {
     public String MyBookListGET(Model model, HttpSession session, PageRequestDTO pageRequestDTO) {
 
         Long memberId = (Long) session.getAttribute("mid");
+        if (memberId == null) { // 로그인하지 않은 사용자는 로그인 페이지로 이동
+            return "redirect:/login";
+        }
 
         PageResponseDTO responseDTO = myBookListService.getAllMyBooks(pageRequestDTO, memberId);
         log.info("responseDTO : " + responseDTO);

@@ -31,14 +31,9 @@
                 </div>
             </div>
         </form>
-
-
         <!-- 정렬 버튼과 리스트 -->
         <button id="latest-btn">최신순</button>
         <button id="alpha-btn">가나다순</button>
-
-
-
         <div>
             <div>
                 <div>
@@ -50,7 +45,7 @@
                         <div th:each="dto : ${responseDTO.dtoList}">
                             <div>
                                 <div>
-                                    <p th:text="${dto.oid}"></p>
+                                    <p th:text="${dto.ogid}"></p>
                                 </div>
                                 <div>
                                     <p th:text="${dto.bookName}"></p>
@@ -86,8 +81,6 @@
         </div>
     </div>
 </div>
-
-
 </div>
 <script layout:fragment="script" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {

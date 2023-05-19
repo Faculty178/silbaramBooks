@@ -18,9 +18,6 @@ public interface MyBookListDAO {
 
     int getCount(PageRequestDTO pageRequestDTO);
 
-//    List<OrderListVO> selectAllMyBooksBySpellASC(Long memberId);
-
-    List<OrderListVO> selectOrderByMemberAndKeyword(PageRequestDTO pageRequestDTO, Long memberId);
 
 
 }
