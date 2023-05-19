@@ -22,7 +22,6 @@ public interface MemberDAO {
     // 비밀번호 재발급
     int updatePasswordByEmailAndUserId (String password, String email, String userId);
 
-
     // 중복아이디 체크
     int countMemberByUserId(String userId);
     // 중복닉네임 체크
@@ -33,16 +32,5 @@ public interface MemberDAO {
 
     // 비밀번호 수정
     void updatePassword (MemberVO memberVO);
-
-
-//    // 자동로그인
-//    void updateUuid(String mid, String uuid);
-//    MemberVO selectUuid(String uuid);
-
-//
-//    // 회원 삭제
-//    void deleteMember(int mid);
-//
-
 
 }
