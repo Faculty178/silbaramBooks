@@ -79,6 +79,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public void quitMember(MemberDTO memberDTO) {
+        log.info(modelMapper.toString());
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        memberDAO.deleteMember(memberVO);
+        log.info(memberVO);
+    }
+
+    @Override
     public MemberDTO getMemberByEmail(String email) {
         MemberVO memberVO = memberDAO.selectUserIdByEmail(email);
         MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);

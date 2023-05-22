@@ -33,4 +33,5 @@ public interface MemberDAO {
     // 비밀번호 수정
     void updatePassword (MemberVO memberVO);
 
+    void deleteMember(MemberVO memberVO);
 }
