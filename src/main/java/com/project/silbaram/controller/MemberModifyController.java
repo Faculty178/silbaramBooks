@@ -73,10 +73,11 @@ public class MemberModifyController {
     @PostMapping("/mypage/resetpw")
     public String checkPwPOST(@RequestParam("oldPassword") String oldPassword,  HttpSession session, MemberDTO memberDTO,
                               RedirectAttributes redirectAttributes, @Valid MemberPassWordModifyDTO memberPassWordModifyDTO,
-                              BindingResult bindingResult) {
+                              BindingResult bindingResult, Model model) {
         Long mid = (Long) session.getAttribute("mid");
         String DBPassword = String.valueOf((memberService.getMemberByMid(mid).getPassword()));
         if (!DBPassword.equals(oldPassword)) {
+            model.addAttribute("msg", "비밀번호를 다시 확인해주세요.");
             // 비밀번호 불일치하는 경우의 처리
             redirectAttributes.addFlashAttribute("error", "비밀번호 불일치");
             return "redirect:/mypage/resetpw";
@@ -84,6 +85,7 @@ public class MemberModifyController {
         else {
             if (bindingResult.hasErrors()) {
                 log.info(bindingResult.getAllErrors());
+                redirectAttributes.addFlashAttribute("error", "비밀번호 불일치");
                 redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
                 return "redirect:/mypage/resetpw";
             }
