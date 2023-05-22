@@ -29,6 +29,8 @@ public interface MemberService {
 
     void modifyMemberPw(MemberPassWordModifyDTO memberDTO);
 
+    void quitMember(MemberDTO memberDTO);
+
     MemberDTO getMemberByEmail(String email);
 
 

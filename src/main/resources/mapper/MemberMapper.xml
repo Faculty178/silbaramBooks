@@ -81,6 +81,11 @@
         WHERE mid = #{mid};
     </update>
 
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        DELETE FROM `member` WHERE `mid` = #{mid};
+    </delete>
+
 
 
 </mapper>

@@ -43,27 +43,23 @@
             <span id="pwSame"></span><br>
         </div>
         <div>
-            <button type="submit" class="btn-submit" onclick="checkModify()">비밀번호 변경</button>
+            <button type="submit" class="reset_password_submit" onclick="checkModify()">비밀번호 변경</button>
         </div>
     </div>
 
 </form >
 <script src="/js/signup.js"></script>
 <script type="text/javascript">
-
-    function checkModify() {
-        $.ajax({
-            url: "/mypage/resetpw",
-            type: "POST",
-            data: $("form[name=frmResetPw]").serialize(),
-            success: function (data) {
-                alert("비밀번호가 성공적으로 변경되었습니다.");
-            },
-            error: function (data) {
-                alert("비밀번호 변경에 실패하였습니다.");
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('.reset_password_submit').addEventListener('click', function () {
+            const msg = "[[${msg}]]";
+            if (msg !== null && msg !== "") {
+                alert(msg);
             }
-        });
-    }
+            pwCheck();
+        })
+
+    })
 </script>
 
 
