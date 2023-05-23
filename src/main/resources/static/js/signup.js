@@ -1,24 +1,3 @@
-/* 회원가입 submit */
-function submitForm() {
-    const id = $('#userId').val();
-    const pw = $('#password').val();
-    const pw2 = $('#password2').val();
-    const nick = $('#nickName').val();
-    const birthDate = $('#birthDate').val();
-    const genderF = $('#genderF').val();
-    const genderM = $('#genderM').val();
-
-    if (id == null || ""){
-        alert("아이디를 입력해주세요");
-        return;
-    }
-    else if (!/^[a-z0-9_-]{5,15}$/g.test(id)) {
-        alert("아이디는 5~15자의 영문소문자, 숫자, '_', '-' 만 가능합니다");
-        return;
-    }
-    return;
-}
-
 
 /* 이메일 */
 document.addEventListener("DOMContentLoaded", function () {

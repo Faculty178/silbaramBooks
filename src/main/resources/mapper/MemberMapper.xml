@@ -53,6 +53,12 @@
         WHERE `email` = #{email}
     </select>
 
+    <select id="selectMemberByEmail"  resultType="com.project.silbaram.vo.MemberVO">
+        SELECT  *
+        FROM `member`
+        WHERE `email` = #{email}
+    </select>
+
     <!-- 비밀번호 재발급 -->
     <update id="updatePasswordByEmailAndUserId">
         UPDATE `member`

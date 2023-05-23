@@ -7,6 +7,7 @@ import com.project.silbaram.oauth.KakaoProfile;
 import com.project.silbaram.oauth.OAuthToken;
 import com.project.silbaram.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,16 +25,23 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Controller
+@Log4j2
 public class OAuthControllerV3 {
     private final ObjectMapper objectMapper;
     private final MemberService memberService;
 
+    /*
+    카카오로그인버튼 하이퍼링크
+    https://kauth.kakao.com/oauth/authorize
+    ?client_id=2d4da76a7e51b2d482ac929a10ee544b
+    &redirect_uri=http://localhost:8080/login/oauth2/code/kakao
+    &response_type=code
+     */
+
     @GetMapping("/login/oauth2/code/kakao")
     public String home(String code, HttpSession session) {
 
-
-
-        // 3, 4 : 인증 코드를 받은 후, 위의 파라미터들을 모두 포함해 Access 토큰 요청을 보내고 응답을 받는 코드
+        // 인증 코드를 받은 후, 위의 파라미터들을 모두 포함해 Access 토큰 요청을 보내고 응답을 받는 코드
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code"); // 고정값
         params.add("client_id", "2d4da76a7e51b2d482ac929a10ee544b");
@@ -96,10 +104,12 @@ public class OAuthControllerV3 {
         session.setAttribute("userId",userId);
         session.setAttribute("nickName",nickName);
         session.setAttribute("email",email);
-        MemberDTO memberDTO = memberService.getMemberByEmail(email);
+        MemberDTO memberDTO = memberService.getMemberDTOByEmail(email);
         if (memberDTO == null) {
-            return "redirect:/signup/kakao";
+            return "redirect:/signupkakao";
         }
-        return "/";
+        log.info("kakaomember: "+memberDTO);
+        session.setAttribute("mid", memberDTO.getMid());
+        return "redirect:/index";
     }
 }

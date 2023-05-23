@@ -31,7 +31,9 @@ public interface MemberService {
 
     void quitMember(MemberDTO memberDTO);
 
-    MemberDTO getMemberByEmail(String email);
+    MemberDTO getUserIdByEmail(String email);
+
+    MemberDTO getMemberDTOByEmail(String email);
 
 
 }

@@ -4,9 +4,9 @@
 <mapper namespace="com.project.silbaram.dao.MyBookListDAO">
 
     <insert id="insertOrder" useGeneratedKeys="true" keyProperty="ogid">
-        INSERT INTO `orderinfo` (`bookId`, `memberId`, `totalPrice`, `orderNum`)
+        INSERT INTO `orderinfo` (`bookId`, `memberId`, `bookPrice`, `orderNum`)
         VALUES
-            (#{bookId}, #{memberId}, #{totalPrice}, #{orderNum});
+            (#{bookId}, #{memberId}, #{bookPrice}, #{orderNum});
     </insert>
 
     <select id="selectAllMyBooks" resultType="com.project.silbaram.vo.OrderListVO">
