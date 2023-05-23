@@ -89,6 +89,9 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO getMemberByEmail(String email) {
         MemberVO memberVO = memberDAO.selectUserIdByEmail(email);
+        if (memberVO == null) {
+            return null;
+        }
         MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
         return memberDTO;
     }
