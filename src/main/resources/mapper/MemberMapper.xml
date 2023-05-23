@@ -46,7 +46,6 @@
         WHERE `mid` = #{mid}
     </select>
 
-
     <!-- 아이디 찾기 -->
     <select id="selectUserIdByEmail"  resultType="com.project.silbaram.vo.MemberVO">
         SELECT  `userId`
@@ -85,8 +84,6 @@
     <delete id="deleteMember">
         DELETE FROM `member` WHERE `mid` = #{mid};
     </delete>
-
-
 
 </mapper>
 
