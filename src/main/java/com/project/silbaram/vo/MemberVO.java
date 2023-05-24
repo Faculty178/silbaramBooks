@@ -22,7 +22,7 @@ public class MemberVO {
     private String zipcode;
     private String address1;
     private String address2;
-    private boolean socialLogin;
+    private String socialLogin;
     private boolean isAdmin;
     private LocalDate regDate;
 }

@@ -22,6 +22,28 @@ public class SignupController {
 
     private final MemberServiceImpl memberService;
 
+    @GetMapping("/signupkakao")
+    public String  addMemberKakaoGET(Model model) {
+
+        log.info("addMemberGET...");
+        model.addAttribute("memberDTO", new MemberDTO());
+        return "silbaram/signup/signup_kakao";
+    }
+
+    @PostMapping("/signupkakao")
+    public String addMemberKakaoPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult,
+                                     RedirectAttributes redirectAttributes) {
+        log.info(memberDTO);
+        log.info("addMemberPOST...");
+        if (bindingResult.hasErrors()) {
+            log.info("has error...");
+            log.info(bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/signupkakao";
+        }
+        memberService.addMember(memberDTO);
+        return "redirect:/index";
+    }
 
     @GetMapping("/signup")
     public String  addMemberGET(Model model) {
@@ -31,7 +53,8 @@ public class SignupController {
         return "silbaram/signup/signup";
     }
     @PostMapping("/signup")
-    public String addMemberPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addMemberPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
         log.info("addMemberPOST...");
         if (bindingResult.hasErrors()) {
             log.info("has error...");

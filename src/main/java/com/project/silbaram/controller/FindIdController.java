@@ -28,7 +28,7 @@ public class FindIdController {
     @PostMapping("/findid")
     public String findIdPOST(@RequestParam String checkEmail, Model model) {
         try {
-            MemberDTO memberDTO = memberService.getMemberByEmail(checkEmail);
+            MemberDTO memberDTO = memberService.getUserIdByEmail(checkEmail);
             if (memberDTO.getUserId() != null && memberDTO !=null) {
                 model.addAttribute("userId", memberDTO.getUserId());
                 return "silbaram/member/find_id_result";

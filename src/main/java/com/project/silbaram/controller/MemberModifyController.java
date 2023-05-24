@@ -66,8 +66,11 @@ public class MemberModifyController {
         // 로그인한 사용자는 비밀번호 변경 이동
         MemberDTO memberDTO = memberService.getMemberByMid(mid); // 회원정보를 조회함
         log.info(memberDTO);
-        model.addAttribute("memberDTO", memberDTO);
-        return "silbaram/member/reset_pw";
+        if (memberDTO.getSocialLogin() == null || memberDTO.getSocialLogin() == "") {
+            model.addAttribute("memberDTO", memberDTO);
+            return "silbaram/member/reset_pw";
+        }
+        return "redirect:/mypage";
     }
 
     @PostMapping("/mypage/resetpw")

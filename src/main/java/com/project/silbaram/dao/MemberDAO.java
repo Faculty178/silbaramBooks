@@ -13,11 +13,15 @@ public interface MemberDAO {
     // 자동로그인
     MemberVO selectMemberByUuid(String uuid);
     void updateUuid(Long mid, String uuid);
+
     // 회원 정보 불러오기
     MemberVO selectMemberByMid(Long mid);
 
     // 아이디 찾기
     MemberVO selectUserIdByEmail(String email);
+
+
+    MemberVO selectMemberByEmail(String email);
 
     // 비밀번호 재발급
     int updatePasswordByEmailAndUserId (String password, String email, String userId);

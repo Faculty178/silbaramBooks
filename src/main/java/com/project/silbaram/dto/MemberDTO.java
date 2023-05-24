@@ -42,7 +42,7 @@ public class MemberDTO {
     private String address1;
     private String address2;
 
-    private boolean socialLogin;
+    private String socialLogin;
     @NotNull
     private boolean isAdmin;
 
